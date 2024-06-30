@@ -25,6 +25,30 @@ This repository focuses on decomposing system designs for Amazon Web Services (A
 [[file:docs/images/url_shortener.png]]
 #+DIAGRAMS_END
 
+** Features 
+
+| Feature                    | Current Rating | Additional Features          | Score |
+|----------------------------+----------------+------------------------------+-------|
+| Project Structure          |              8 | Consistent across projects   |       |
+| Makefile                   |              9 | Added linting and syncing    |       |
+| Documentation              |              7 | README.org, needs more depth |       |
+| Diagrams                   |             10 | Comprehensive Mermaid usage  |       |
+| Scripts                    |              9 | Useful utility scripts       |       |
+| Project Variety            |              9 | Wide range of AWS examples   |       |
+| Dependency Management      |              8 | Uses Poetry (pyproject.toml) |       |
+| Linting                    |              8 | Shell, Markdown, Mermaid     |       |
+| CI/CD Pipeline             |              2 | GitHub Actions folder exists |       |
+| Testing Framework          |              2 | Tests directory present      |       |
+| Infrastructure as Code     |              3 | Mentioned, not implemented   |       |
+| Security Scanning          |              1 | Not visibly implemented      |       |
+| API Documentation          |              1 | Not visibly implemented      |       |
+| Containerization           |              1 | Not visibly implemented      |       |
+| Cost Management Tools      |              1 | Not visibly implemented      |       |
+| Contribution Guidelines    |              2 | CONTRIBUTING.org exists      |       |
+| Licensing                  |              2 | LICENSE file exists          |       |
+|----------------------------+----------------+------------------------------+-------|
+| Overall Repository Quality |              7 |                              |       |
+
 ** Note
 
 In the diagrams folder, you will find Mermaid diagrams for various system designs.
