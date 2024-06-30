@@ -1,0 +1,70 @@
+contact-center-rag-solution/
+│
+├── .github/
+│   └── workflows/         # CI/CD pipelines
+│
+├── src/
+│   ├── lambda_functions/
+│   │   ├── contact_flow_handler/
+│   │   ├── lex_fulfillment/
+│   │   ├── dynamodb_query/
+│   │   ├── opensearch_connector/
+│   │   ├── s3_document_retriever/
+│   │   ├── bedrock_invoker/
+│   │   └── data_pipeline_processor/
+│   │
+│   ├── connect/
+│   │   └── contact_flows/  # JSON definitions of contact flows
+│   │
+│   ├── lex/
+│   │   └── bot_definitions/  # Lex bot configurations
+│   │
+│   ├── sagemaker/
+│   │   ├── notebooks/
+│   │   └── models/
+│   │
+│   ├── opensearch/
+│   │   └── index_definitions/
+│   │
+│   ├── quicksight/
+│   │   └── dashboard_definitions/
+│   │
+│   └── data_pipeline/
+│       ├── kinesis_streams/
+│       ├── athena_queries/
+│       └── redshift_scripts/
+│
+├── infrastructure/
+│   ├── terraform/           # If using Terraform
+│   │   ├── modules/
+│   │   └── environments/
+│   │
+│   └── cloudformation/      # If using CloudFormation
+│       ├── templates/
+│       └── stacks/
+│
+├── tests/
+│   ├── unit/
+│   ├── integration/
+│   └── e2e/
+│
+├── docs/
+│   ├── architecture/
+│   ├── api/
+│   └── user_guides/
+│
+├── scripts/
+│   ├── deployment/
+│   ├── data_migration/
+│   └── utilities/
+│
+├── config/
+│   ├── dev/
+│   ├── staging/
+│   └── prod/
+│
+├── .gitignore
+├── README.md
+├── requirements.txt         # Python dependencies
+├── package.json             # Node.js dependencies (if applicable)
+└── Makefile                 # Common commands for build, test, deploy

@@ -1,0 +1,46 @@
+   graph TD
+    User[User] -->|Access| CDN[CloudFront CDN]
+    CDN --> ALB[Application Load Balancer]
+    ALB --> WebApp[URL Shortener Web Application]
+    
+    WebApp -->|API Requests| APIGateway[API Gateway]
+    APIGateway -->|Route Requests| Lambda[AWS Lambda]
+    
+    Lambda -->|Generate Short URL| URLGenerator[URL Generation Service]
+    Lambda -->|Redirect| URLRedirect[URL Redirect Service]
+    Lambda -->|Analytics| AnalyticsService[Analytics Service]
+    
+    URLGenerator -->|Store Mapping| DynamoDB[Amazon DynamoDB]
+    URLRedirect -->|Lookup Mapping| DynamoDB
+    URLRedirect -->|Cache Popular URLs| ElastiCache[Amazon ElastiCache]
+    
+    AnalyticsService -->|Store Click Data| Kinesis[Amazon Kinesis]
+    Kinesis -->|Process Streams| KinesisAnalytics[Kinesis Data Analytics]
+    KinesisAnalytics -->|Store Processed Data| Redshift[Amazon Redshift]
+    
+    subgraph "Core Services"
+        URLGenerator
+        URLRedirect
+        AnalyticsService
+    end
+    
+    subgraph "Data Storage"
+        DynamoDB
+        ElastiCache
+        Redshift
+    end
+    
+    Lambda -->|Handle Rate Limiting| APIGateway
+    
+    CloudWatch[Amazon CloudWatch] -->|Monitor| Lambda
+    CloudWatch -->|Monitor| DynamoDB
+    CloudWatch -->|Monitor| APIGateway
+    
+    WAF[AWS WAF] -->|Protect| ALB
+    WAF -->|Protect| APIGateway
+    
+    Route53[Amazon Route 53] -->|DNS| CDN
+    
+    QuickSight[Amazon QuickSight] -->|Visualize| Redshift
+    
+    User -->|Short URL Request| CDN

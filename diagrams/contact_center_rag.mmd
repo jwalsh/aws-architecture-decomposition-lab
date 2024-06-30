@@ -1,0 +1,25 @@
+graph TD
+    Developers --> SageMaker[aws sagemaker create-model]
+    Customers --> Connect[aws connect start-contact-flow]
+    Connect --> Lex[aws lex-runtime post-text]
+    Lex --> Lambda[aws lambda invoke]
+    Lambda --> DynamoDB[aws dynamodb query]
+    Lambda --> OpenSearch[aws opensearch create-outbound-connection]
+    Lambda --> S3[aws s3 get-object]
+    Lambda --> Bedrock[aws bedrock-runtime invoke-model]
+    
+    OpenSearch --> KnowledgeBase[aws kendra query]
+    KnowledgeBase --> S3
+    
+    ProductManagers --> QuickSight[aws quicksight create-dashboard]
+    
+    subgraph DataPipeline[Data Pipeline]
+        Kinesis[aws kinesis put-record] --> Athena[aws athena start-query-execution]
+        Athena --> Redshift[aws redshift-data execute-statement]
+        Redshift --> Lambda2[aws lambda invoke]
+    end
+    
+    Lambda2 --> CloudWatch[aws cloudwatch put-metric-data]
+    CloudWatch --> SNS[aws sns publish]
+    
+    Connect --> DataPipeline

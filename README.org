@@ -1,0 +1,29 @@
+* AWS Architecture Decomposition Lab
+#+CREATOR: Jason Walsh <j@wal.sh> 
+
+This repository focuses on decomposing system designs for Amazon Web Services (AWS) hands-on projects, providing practical experience with AWS use cases.
+
+** Learning Objectives
+
+- Decompose system designs for WAC
+- Explore key AWS services and their interactions
+- Explore scalability, performance, and security considerations
+- Gain hands-on experience with AWS
+
+** Diagrams
+
+#+DIAGRAMS_START
+#+DIAGRAMS_END
+
+** Note
+
+In the diagrams folder, you will find Mermaid diagrams for various system designs.
+These diagrams can be rendered using the mermaid command:
+
+    mermaid view diagrams/url_shortener.mmd
+
+To build the diagrams, run the above command in the diagrams folder.
+
+For help or questions, please open an issue or provide feedback.
+
+@jwalsh

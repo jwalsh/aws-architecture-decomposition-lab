@@ -1,0 +1,48 @@
+graph TD
+    User[User] -->|Browse/Interact| WebApp[Etsy Web/Mobile App]
+    WebApp -->|Log Events| Kinesis[Amazon Kinesis Data Streams]
+    
+    Kinesis -->|Process Events| KDF[Kinesis Data Firehose]
+    Kinesis -->|Real-time Processing| KDA[Kinesis Data Analytics]
+    
+    KDF -->|Store Raw Data| S3[Amazon S3 Data Lake]
+    KDA -->|Update User Profiles| DynamoDB[Amazon DynamoDB]
+    
+    S3 -->|Batch Processing| EMR[Amazon EMR]
+    EMR -->|Train Models| SageMaker[Amazon SageMaker]
+    
+    WebApp -->|Ad Request| ALB[Application Load Balancer]
+    ALB -->|Route Request| AdServer[Ad Serving Engine]
+    
+    AdServer -->|Get User Profile| DynamoDB
+    AdServer -->|Get Ad Candidates| ElastiCache[Amazon ElastiCache]
+    AdServer -->|Rank Ads| SageMaker
+    
+    SageMaker -->|Deploy Models| AdServer
+    
+    AdServer -->|Serve Ad| WebApp
+    AdServer -->|Log Impression/Click| Kinesis
+    
+    CloudWatch[Amazon CloudWatch] -->|Monitor| AdServer
+    CloudWatch -->|Monitor| Kinesis
+    CloudWatch -->|Monitor| SageMaker
+    
+    QuickSight[Amazon QuickSight] -->|Visualize| S3
+    QuickSight -->|Visualize| DynamoDB
+    
+    subgraph "Real-time Processing"
+        Kinesis
+        KDF
+        KDA
+    end
+    
+    subgraph "Machine Learning Pipeline"
+        EMR
+        SageMaker
+    end
+    
+    subgraph "Ad Serving"
+        ALB
+        AdServer
+        ElastiCache
+    end
