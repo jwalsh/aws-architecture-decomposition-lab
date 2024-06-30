@@ -44,14 +44,14 @@ add_project() {
         warn "Project $project_name already exists"
     fi
 
-    # Add a README.org file to the project directory if 
+    # Add a README.org file to the project directory if
     if [[ ! -d "$projects_dir/$project_name/README.org" ]]; then
-    cat >"$projects_dir/$project_name/README.org" <<EOF
+        cat >"$projects_dir/$project_name/README.org" <<EOF
 
 #+TITLE: $project_name
 #+DESCRIPTION: Project for Mermaid diagram $diagram
 EOF
-fi
+    fi
 }
 
 # Main script execution
