@@ -58,7 +58,22 @@ lint-scripts:
 lint-markdown:
 	@echo "Linting markdown files..."
 	@markdownlint --config .markdownlint.json .
-
+## 
 sync-diagrams-to-projects:
 	@echo "Syncing diagrams to projects..."
 	@./scripts/sync-diagrams-to-projects.sh
+
+sync-diagrams-to-readme: diagrams
+	@echo "Syncing diagrams to README..."
+	@./scripts/sync-diagrams-to-readme.sh
+
+# .venv: venv
+
+# venv:
+# 	@echo "Creating virtual environment..."
+# 	@python3 -m venv venv
+# 	@echo "Activating virtual environment..."
+# 	@source venv/bin/activate
+# 	@echo "Installing dependencies..."
+# 	@pip install -r requirements.txt
+# 	@echo "Virtual environment created successfully."

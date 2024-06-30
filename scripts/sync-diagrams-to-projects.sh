@@ -2,28 +2,8 @@
 
 # Script to validate Mermaid diagrams and their corresponding projects
 
-# Utility functions
-
-warn() {
-    # Show warning icon and message in red color
-    echo -e "\033[31m⚠️ $@\033[0m" 1>&2
-
-}
-
-info() {
-    # Show info icon and message in blue color
-    echo -e "\033[34m🔵 $@\033[0m" 1>&2
-}
-
-pass() {
-    # Show success icon and message in green color
-    echo -e "\033[32m✅ $@\033[0m" 1>&2
-}
-
-error() {
-    # Show error icon and message in red color
-    echo -e "\033[31m❌ $@\033[0m" 1>&2
-}
+# Load logger.sh
+soure logger.sh
 
 # Configuration (Optional)
 diagrams_dir="diagrams" # Directory containing Mermaid diagrams

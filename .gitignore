@@ -1,0 +1,36 @@
+# Build artifacts and temporary files
+# setup.shar
+# Makefile
+
+# Python-specific
+__pycache__/
+*.py[cod]
+*.so
+*.egg
+*.egg-info
+dist
+build
+*.lock
+
+# macOS-specific
+.DS_Store
+
+# Git-specific
+.git
+
+# Generated documentation and images (customize if needed)
+# docs/images/*.png
+# docs/images/*.svg
+
+# Virtual environments (if you use them)
+venv
+.venv
+
+# Editor and IDE files (customize for your editor)
+*.swp
+*.swo
+*~
+
+# Other ignored patterns (consider adding)
+*.log
+node_modules/
