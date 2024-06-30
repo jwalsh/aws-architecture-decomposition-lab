@@ -3,7 +3,9 @@
 # Script to validate Mermaid diagrams and their corresponding projects
 
 # Load logger.sh
-soure logger.sh
+# Load logger.sh
+SCRIPT_DIR=$(dirname "$0")
+source "$SCRIPT_DIR/logger.sh"
 
 # Configuration (Optional)
 diagrams_dir="diagrams" # Directory containing Mermaid diagrams
@@ -42,13 +44,14 @@ add_project() {
         warn "Project $project_name already exists"
     fi
 
-    # Add a README.org file to the project directory
+    # Add a README.org file to the project directory if 
+    if [[ ! -d "$projects_dir/$project_name/README.org" ]]; then
     cat >"$projects_dir/$project_name/README.org" <<EOF
 
 #+TITLE: $project_name
 #+DESCRIPTION: Project for Mermaid diagram $diagram
 EOF
-
+fi
 }
 
 # Main script execution
