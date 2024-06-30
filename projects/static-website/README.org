@@ -1,0 +1,3 @@
+
+#+TITLE: static-website
+#+DESCRIPTION: Project for Mermaid diagram diagrams/static_website.mmd

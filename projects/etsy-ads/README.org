@@ -1,0 +1,3 @@
+
+#+TITLE: etsy-ads
+#+DESCRIPTION: Project for Mermaid diagram diagrams/etsy_ads.mmd

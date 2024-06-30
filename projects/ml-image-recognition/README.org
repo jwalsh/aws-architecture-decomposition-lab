@@ -1,0 +1,3 @@
+
+#+TITLE: ml-image-recognition
+#+DESCRIPTION: Project for Mermaid diagram diagrams/ml_image_recognition.mmd
