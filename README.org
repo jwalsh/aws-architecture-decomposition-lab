@@ -13,16 +13,28 @@ This repository focuses on decomposing system designs for Amazon Web Services (A
 ** Diagrams
 
 #+DIAGRAMS_START
+
+*** docs/images/contact_center_rag.png
 [[file:docs/images/contact_center_rag.png]]
+*** docs/images/etsy_ads.png
 [[file:docs/images/etsy_ads.png]]
+*** docs/images/ml_image_recognition.png
 [[file:docs/images/ml_image_recognition.png]]
+*** docs/images/netflix_like.png
 [[file:docs/images/netflix_like.png]]
+*** docs/images/photo_sharing.png
 [[file:docs/images/photo_sharing.png]]
+*** docs/images/ride_sharing.png
 [[file:docs/images/ride_sharing.png]]
+*** docs/images/serverless_web.png
 [[file:docs/images/serverless_web.png]]
+*** docs/images/static_website.png
 [[file:docs/images/static_website.png]]
+*** docs/images/twitter_like.png
 [[file:docs/images/twitter_like.png]]
+*** docs/images/url_shortener.png
 [[file:docs/images/url_shortener.png]]
+
 #+DIAGRAMS_END
 
 ** Features 

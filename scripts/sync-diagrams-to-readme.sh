@@ -57,6 +57,7 @@ tmpfile=$(mktemp)
 # Add the rendered images to the Diagrams section in the temporary file
 for image in "$rendered_images_dir"/*."$rendered_images_filetype"; do
     info "Adding image $image"
+    echo "*** $image" >> "$tmpfile"
     echo "[[file:$image]]" >>"$tmpfile"
 done
 
