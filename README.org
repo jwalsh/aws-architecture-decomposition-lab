@@ -7,8 +7,12 @@ This repository focuses on decomposing system designs for Amazon Web Services (A
 
 - Decompose system designs for WAC
 - Explore key AWS services and their interactions
+- Understanding how different AWS services interact in real-world scenarios
+- Implementing serverless, machine learning, content delivery, and data processing architectures
+- Visualizing architectures using Mermaid diagrams
 - Explore scalability, performance, and security considerations
 - Gain hands-on experience with AWS
+
 
 ** Diagrams
 
