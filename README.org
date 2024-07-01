@@ -39,27 +39,67 @@ This repository focuses on decomposing system designs for Amazon Web Services (A
 
 ** Features 
 
-| Feature                    | Current Rating | Additional Features          | Score |
-|----------------------------+----------------+------------------------------+-------|
-| Project Structure          |              8 | Consistent across projects   |       |
-| Makefile                   |              9 | Added linting and syncing    |       |
-| Documentation              |              7 | README.org, needs more depth |       |
-| Diagrams                   |             10 | Comprehensive Mermaid usage  |       |
-| Scripts                    |              9 | Useful utility scripts       |       |
-| Project Variety            |              9 | Wide range of AWS examples   |       |
-| Dependency Management      |              8 | Uses Poetry (pyproject.toml) |       |
-| Linting                    |              8 | Shell, Markdown, Mermaid     |       |
-| CI/CD Pipeline             |              2 | GitHub Actions folder exists |       |
-| Testing Framework          |              2 | Tests directory present      |       |
-| Infrastructure as Code     |              3 | Mentioned, not implemented   |       |
-| Security Scanning          |              1 | Not visibly implemented      |       |
-| API Documentation          |              1 | Not visibly implemented      |       |
-| Containerization           |              1 | Not visibly implemented      |       |
-| Cost Management Tools      |              1 | Not visibly implemented      |       |
-| Contribution Guidelines    |              2 | CONTRIBUTING.org exists      |       |
-| Licensing                  |              2 | LICENSE file exists          |       |
-|----------------------------+----------------+------------------------------+-------|
-| Overall Repository Quality |              7 |                              |       |
+| Category                   | Current Rating | Specific Features / Tasks                                     | Proposed Score | Implementation Sequence |
+|----------------------------+----------------+---------------------------------------------------------------+----------------+-------------------------|
+| Project Structure          |              8 | - Standardize project layouts across all examples             |              9 |                         |
+|                            |                | - Implement consistent naming conventions                     |                |                         |
+|----------------------------+----------------+---------------------------------------------------------------+----------------+-------------------------|
+| Makefile                   |              9 | - Add targets for running tests                               |              9 |                         |
+|                            |                | - Include deployment targets for different environments       |                |                         |
+|----------------------------+----------------+---------------------------------------------------------------+----------------+-------------------------|
+| Documentation              |              7 | - Expand README.org with more detailed usage instructions     |              8 |                         |
+|                            |                | - Create architecture decision records (ADRs)                 |                |                         |
+|----------------------------+----------------+---------------------------------------------------------------+----------------+-------------------------|
+| Diagrams                   |             10 | - Add sequence diagrams for complex interactions              |             10 |                         |
+|                            |                | - Include cost estimation diagrams                            |                |                         |
+|----------------------------+----------------+---------------------------------------------------------------+----------------+-------------------------|
+| Scripts                    |              9 | - Add script for automated environment setup                  |              9 |                         |
+|                            |                | - Create script for generating test data                      |                |                         |
+|----------------------------+----------------+---------------------------------------------------------------+----------------+-------------------------|
+| Project Variety            |              9 | - Add serverless data processing example                      |              9 |                         |
+|                            |                | - Include example of multi-region architecture                |                |                         |
+|----------------------------+----------------+---------------------------------------------------------------+----------------+-------------------------|
+| Dependency Management      |              8 | - Implement consistent use of Poetry across all projects      |              8 |                         |
+|                            |                | - Add version pinning for critical dependencies               |                |                         |
+|----------------------------+----------------+---------------------------------------------------------------+----------------+-------------------------|
+| Linting                    |              8 | - Add Python linting with flake8 or pylint                    |              8 |                         |
+|                            |                | - Implement pre-commit hooks for automatic linting            |                |                         |
+|----------------------------+----------------+---------------------------------------------------------------+----------------+-------------------------|
+| CI/CD Pipeline             |              2 | - Set up GitHub Actions for automated testing                 |              8 |                       2 |
+|                            |                | - Implement automatic diagram generation in CI                |                |                         |
+|                            |                | - Add linting checks to the CI pipeline                       |                |                         |
+|----------------------------+----------------+---------------------------------------------------------------+----------------+-------------------------|
+| Testing Framework          |              2 | - Add pytest for Python testing                               |              8 |                       1 |
+|                            |                | - Create basic unit tests for existing functions              |                |                         |
+|                            |                | - Implement integration tests for core components             |                |                         |
+|----------------------------+----------------+---------------------------------------------------------------+----------------+-------------------------|
+| Infrastructure as Code     |              3 | - Implement Terraform templates for each project              |              7 |                       4 |
+|                            |                | - Start with core services (S3, DynamoDB, Lambda)             |                |                         |
+|                            |                | - Gradually add more complex services                         |                |                         |
+|----------------------------+----------------+---------------------------------------------------------------+----------------+-------------------------|
+| Security Scanning          |              1 | - Integrate Bandit for Python security scanning               |              6 |                       6 |
+|                            |                | - Add security checks to the CI pipeline                      |                |                         |
+|                            |                | - Implement regular dependency vulnerability scans            |                |                         |
+|----------------------------+----------------+---------------------------------------------------------------+----------------+-------------------------|
+| API Documentation          |              1 | - Implement Swagger/OpenAPI for API projects                  |              7 |                       5 |
+|                            |                | - Begin with serverless-web and url-shortener projects        |                |                         |
+|----------------------------+----------------+---------------------------------------------------------------+----------------+-------------------------|
+| Containerization           |              1 | - Add Dockerfiles for applicable projects                     |              6 |                       8 |
+|                            |                | - Start with etsy-ads or netflix-like projects                |                |                         |
+|----------------------------+----------------+---------------------------------------------------------------+----------------+-------------------------|
+| Cost Management Tools      |              1 | - Implement AWS Cost Explorer integration                     |              5 |                       9 |
+|                            |                | - Create custom scripts for cost optimization recommendations |                |                         |
+|----------------------------+----------------+---------------------------------------------------------------+----------------+-------------------------|
+| Contribution Guidelines    |              2 | - Flesh out CONTRIBUTING.org with detailed guidelines         |              7 |                       7 |
+|                            |                | - Include information on coding standards, PR process         |                |                         |
+|----------------------------+----------------+---------------------------------------------------------------+----------------+-------------------------|
+| Licensing                  |              2 | - Choose and add appropriate open-source license              |              8 |                       3 |
+|                            |                | - Ensure all files include license headers                    |                |                         |
+|----------------------------+----------------+---------------------------------------------------------------+----------------+-------------------------|
+| Cross-project Integration  |              1 | - Create examples of inter-project integration                |              6 |                      10 |
+|                            |                | - Develop end-to-end scenarios using multiple architectures   |                |                         |
+|----------------------------+----------------+---------------------------------------------------------------+----------------+-------------------------|
+| Overall Repository Quality |              7 |                                                               |              8 |                         |
 
 ** Note
 
