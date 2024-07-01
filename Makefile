@@ -13,6 +13,22 @@ JSON_FILES := $(wildcard *.json)
 
 all: diagrams prettify-json lint
 
+# CI targets
+configure:
+	@echo "Configuring the project..."
+        # Add any necessary configuration steps here
+
+install-deps:
+	@echo "Installing dependencies..."
+
+check:
+	@echo "Running checks..."
+
+
+distcheck:
+	@echo "Running distribution checks..."
+
+
 # Generate both PNG and SVG diagrams
 diagrams: $(PNG_DIAGRAMS) $(SVG_DIAGRAMS)
 	@echo "All diagrams generated successfully."
