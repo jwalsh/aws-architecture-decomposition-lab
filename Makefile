@@ -5,13 +5,12 @@ MERMAID_FILES := $(wildcard $(DIAGRAM_SRC_DIR)/*.mmd)
 PNG_DIAGRAMS := $(patsubst $(DIAGRAM_SRC_DIR)/%.mmd,$(DIAGRAM_OUT_DIR)/%.png,$(MERMAID_FILES))
 SVG_DIAGRAMS := $(patsubst $(DIAGRAM_SRC_DIR)/%.mmd,$(DIAGRAM_OUT_DIR)/%.svg,$(MERMAID_FILES))
 PNG_BG := white # see also transparent
-
-# JSON files
 JSON_FILES := $(wildcard *.json)
 
 .PHONY: all diagrams clean prettify-json lint
 
 all: diagrams prettify-json lint
+
 
 # CI targets
 configure:
@@ -23,7 +22,6 @@ install-deps:
 
 check:
 	@echo "Running checks..."
-
 
 distcheck:
 	@echo "Running distribution checks..."
@@ -44,6 +42,10 @@ $(DIAGRAM_OUT_DIR)/%.svg: $(DIAGRAM_SRC_DIR)/%.mmd | $(DIAGRAM_OUT_DIR)
 $(DIAGRAM_OUT_DIR):
 	mkdir -p $@
 
+clean:
+	rm -rf $(DIAGRAM_OUT_DIR)
+
+
 # Prettify JSON files
 prettify-json: $(JSON_FILES)
 	@echo "Prettifying JSON files..."
@@ -52,6 +54,7 @@ prettify-json: $(JSON_FILES)
 		jq . $$file > $$file.tmp && mv $$file.tmp $$file; \
 	done
 	@echo "All JSON files prettified successfully."
+
 
 # Lint all files
 lint:
@@ -62,8 +65,6 @@ lint:
 	done
 	@echo "Linting completed."
 
-clean:
-	rm -rf $(DIAGRAM_OUT_DIR)
 
 ## Lint shell scripts
 lint-scripts:
@@ -75,7 +76,9 @@ lint-scripts:
 lint-markdown:
 	@echo "Linting markdown files..."
 	@markdownlint --config .markdownlint.json .
-## 
+
+
+#  Sync diagrams to projects and README
 sync-diagrams-to-projects:
 	@echo "Syncing diagrams to projects..."
 	@./scripts/sync-diagrams-to-projects.sh
@@ -84,6 +87,8 @@ sync-diagrams-to-readme: diagrams
 	@echo "Syncing diagrams to README..."
 	@./scripts/sync-diagrams-to-readme.sh
 
+
+# Virtual environments
 # .venv: venv
 
 # venv:
