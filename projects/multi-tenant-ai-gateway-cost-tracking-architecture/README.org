@@ -1,0 +1,3 @@
+
+#+TITLE: multi-tenant-ai-gateway-cost-tracking-architecture
+#+DESCRIPTION: Project for Mermaid diagram diagrams/multi_tenant_ai_gateway_cost_tracking_architecture.mmd
