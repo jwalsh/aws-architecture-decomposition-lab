@@ -1,0 +1,33 @@
+graph TD
+    Users((Users)) --> Client
+    Client --> WAF[AWS WAF]
+    Client -->|1| CF[Amazon CloudFront]
+    CF -->|2| Cognito[Amazon Cognito]
+    WAF & CF & Cognito --> UI[UI]
+    CF --> S3UI[S3 bucket\nUI]
+    UI -->|3| APIG[Amazon API Gateway]
+    APIG -->|APIs| Lambda1[Backing\nfunctions]
+    APIG -->|APIs| Lambda2[Workflow\norchestrator]
+    Lambda1 & Lambda2 -->|4| DDB1[Amazon DynamoDB\nCase management\nstore]
+    Lambda2 -->|11| DDB2[Amazon DynamoDB\nConfiguration for\norchestrating workflows]
+    Lambda1 --> S3Inf[S3 bucket\n/inferences]
+    S3Inf -->|12| Kendra[Amazon Kendra]
+    Kendra --> Lambda1
+    Lambda1 & Lambda2 -->|7| CEB[Custom\nevent bus]
+    CEB -->|8,10| Workflows
+    subgraph Workflows
+        TEW[Text extraction\nworkflow]
+        EDW[Entity detection\nworkflow]
+        RW[Redaction\nworkflow]
+    end
+    Client -->|HTTP POST/GET| S3Up[S3 bucket\n/upload]
+    S3Up -->|5,6 s3:PutObject| DEB[Default\nevent bus]
+    DEB --> Lambda2
+    Workflows --> DLQ[Dead-letter\nqueue]
+    Lambda2 --> NM[Notification\nmanager]
+    NM --> SNS[Amazon SNS]
+    SNS --> Email[Email notification]
+    CWD[Amazon CloudWatch\ndashboard]
+
+    classDef aws fill:#FF9900,stroke:#232F3E,stroke-width:2px,color:#232F3E;
+    class WAF,CF,Cognito,APIG,Lambda1,Lambda2,DDB1,DDB2,S3Inf,S3UI,S3Up,Kendra,CEB,DEB,SNS,CWD aws;
