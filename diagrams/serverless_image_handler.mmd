@@ -1,0 +1,27 @@
+graph LR
+    Client[Client] <--> CF[Amazon CloudFront]
+    CF <--> APIG[Amazon API Gateway]
+    APIG --> Lambda[AWS Lambda]
+    Lambda <--> S3[Amazon S3 bucket\n(customer created)]
+    Lambda <--> SM[AWS Secrets Manager]
+    Lambda <--> Rekognition[Amazon Rekognition]
+    
+    subgraph CloudFormation Stack
+        CF
+        APIG
+        Lambda
+        S3
+        SM
+    end
+    
+    classDef aws fill:#FF9900,stroke:#232F3E,stroke-width:2px,color:#232F3E;
+    class CF,APIG,Lambda,S3,SM,Rekognition aws;
+    
+    style CloudFormation Stack fill:#E6F3FF,stroke:#66B2FF,stroke-width:2px;
+    
+    %% Additional labels
+    OptimizedImage[Optimized image 30KB\nSame width and height]
+    OriginalImage[Original image\n100KB]
+    
+    OptimizedImage --> CF
+    S3 <--> OriginalImage

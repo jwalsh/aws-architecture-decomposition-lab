@@ -1,0 +1,3 @@
+
+#+TITLE: generative-ai-application-builder
+#+DESCRIPTION: Project for Mermaid diagram diagrams/generative_ai_application_builder.mmd

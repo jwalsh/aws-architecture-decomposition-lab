@@ -1,0 +1,42 @@
+graph TD
+    Users[Admin users] -->|1| Client
+    Client -->|2| CF[Amazon CloudFront]
+    Client -->|3| WAF[AWS WAF V2 WebACL]
+    WAF -->|4| APIG[Amazon API Gateway]
+    CF --> APIG
+    CF --> S3UI[Amazon S3\nWeb App UI]
+    APIG -->|5| Cognito[Amazon Cognito]
+    APIG -->|6| Lambda[AWS Lambda\nBacking Functions]
+    Lambda -->|7| DDB[(Amazon DynamoDB\nConfiguration Store)]
+    Lambda -->|8| CFN[AWS CloudFormation]
+    CFN -->|Use Case & Nested Templates| S3A[Amazon S3\nAWS Solutions Artifact Bucket]
+    CFN --> Stacks[Stacks\nDeployed Use Cases]
+    CFN -->|9| SM[AWS Secrets Manager]
+    SM -->|10| PS1[Parameter Store]
+    PS1 -->|Delete key| LambdaF[Lambda function]
+    DDB -->|Filtered event for\nRemove on TTL expiry| LambdaF
+    CFN -->|11| CW[Amazon CloudWatch\nCustom Dashboard]
+    
+    subgraph AWS Cloud
+        CF
+        WAF
+        APIG
+        Cognito
+        Lambda
+        DDB
+        CFN
+        S3A
+        Stacks
+        SM
+        PS1
+        LambdaF
+        CW
+        S3UI
+    end
+    
+    APIG -->|Store Stack ID as returned by AWS CloudFormation| DDB
+    
+    classDef awsService fill:#FF9900,stroke:#232F3E,stroke-width:2px,color:#232F3E;
+    class CF,WAF,APIG,Cognito,Lambda,DDB,CFN,S3A,SM,PS1,LambdaF,CW,S3UI awsService;
+    
+    style AWS Cloud fill:#F7F7F7,stroke:#232F3E,stroke-width:2px;
