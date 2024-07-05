@@ -1,0 +1,47 @@
+graph TD
+    subgraph DataProducers ["Data Producers"]
+        PC["PC Client"]
+        GameServers["Game servers"]
+        MobileClient["Mobile Client"]
+        SDK["SDK"]
+    end
+
+    subgraph AWSCloud ["AWS Cloud"]
+        subgraph CICD ["CI/CD Pipeline"]
+            Kinesis["Amazon Kinesis\nData Streams"]
+            ApacheFlink["Amazon Managed\nService for Apache\nFlink"]
+            CloudWatch["Amazon CloudWatch"]
+            SNS["Amazon SNS"]
+            APIGateway["Amazon API\nGateway"]
+            DynamoDB["Amazon DynamoDB"]
+            KinesisFirehose["Amazon Kinesis\nData Firehose"]
+            S3["Amazon S3"]
+            AWSGlue["AWS Glue"]
+            Athena["Amazon Athena"]
+            QuickSight["Amazon QuickSight"]
+        end
+    end
+
+    subgraph DataConsumers ["Data Consumers"]
+        Admins["Admins"]
+        LiveOps["LiveOps"]
+    end
+
+    PC --> Kinesis
+    GameServers --> Kinesis
+    MobileClient --> APIGateway
+    SDK --> APIGateway
+
+    APIGateway <--> DynamoDB
+    APIGateway --> Kinesis
+    Kinesis --> ApacheFlink
+    ApacheFlink --> CloudWatch
+    CloudWatch --> SNS
+    ApacheFlink --> KinesisFirehose
+    KinesisFirehose --> S3
+    S3 <-- AWSGlue
+    S3 --> Athena
+    Athena --> QuickSight
+    
+    SNS --> DataConsumers
+    QuickSight --> DataConsumers
