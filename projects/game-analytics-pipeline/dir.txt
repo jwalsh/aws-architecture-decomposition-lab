@@ -1,0 +1,51 @@
+snake-game-project/
+├── game/
+│   ├── src/
+│   │   ├── main.py
+│   │   ├── game_logic.py
+│   │   ├── rendering.py
+│   │   └── api_client.py
+│   ├── assets/
+│   │   ├── images/
+│   │   │   └── snake_sprite.png
+│   │   └── sounds/
+│   │       ├── eat.wav
+│   │       └── game_over.wav
+│   ├── tests/
+│   │   ├── test_game_logic.py
+│   │   └── test_api_client.py
+│   └── requirements.txt
+├── infrastructure/
+│   ├── terraform/
+│   │   ├── environments/
+│   │   │   ├── lcl.tfvars
+│   │   │   ├── dev.tfvars
+│   │   │   ├── qat.tfvars
+│   │   │   ├── stg.tfvars
+│   │   │   └── prd.tfvars
+│   │   ├── modules/
+│   │   │   ├── api_gateway/
+│   │   │   │   ├── main.tf
+│   │   │   │   ├── variables.tf
+│   │   │   │   └── outputs.tf
+│   │   │   ├── lambda/
+│   │   │   │   ├── main.tf
+│   │   │   │   ├── variables.tf
+│   │   │   │   └── outputs.tf
+│   │   │   └── dynamodb/
+│   │   │       ├── main.tf
+│   │   │       ├── variables.tf
+│   │   │       └── outputs.tf
+│   │   ├── main.tf
+│   │   ├── variables.tf
+│   │   ├── outputs.tf
+│   │   └── providers.tf
+│   ├── scripts/
+│   │   ├── deploy.sh
+│   │   ├── test_api.sh
+│   │   └── start_localstack.sh
+│   └── localstack/
+│       └── docker-compose.yml
+├── .gitignore
+├── README.md
+└── .env.example
