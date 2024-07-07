@@ -14,6 +14,14 @@ This repository focuses on decomposing system designs for Amazon Web Services (A
 - Gain hands-on experience with AWS
 
 
+** References
+
+- https://aws.amazon.com/architecture/well-architected/
+- https://cloud.google.com/architecture/framework
+- https://learn.microsoft.com/en-us/azure/well-architected/
+- https://www.ibm.com/architectures/well-architected
+
+
 ** Diagrams
 
 #+DIAGRAMS_START
