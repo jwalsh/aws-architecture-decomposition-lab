@@ -28,22 +28,42 @@ This repository focuses on decomposing system designs for Amazon Web Services (A
 
 *** docs/images/contact_center_rag.png
 [[file:docs/images/contact_center_rag.png]]
+*** docs/images/enhanced_document_understanding.png
+[[file:docs/images/enhanced_document_understanding.png]]
 *** docs/images/etsy_ads.png
 [[file:docs/images/etsy_ads.png]]
+*** docs/images/game_analytics_pipeline.png
+[[file:docs/images/game_analytics_pipeline.png]]
+*** docs/images/generative_ai_application_builder.png
+[[file:docs/images/generative_ai_application_builder.png]]
+*** docs/images/iot_airport_hotel_architecture.png
+[[file:docs/images/iot_airport_hotel_architecture.png]]
+*** docs/images/media_services_application_mapper.png
+[[file:docs/images/media_services_application_mapper.png]]
 *** docs/images/ml_image_recognition.png
 [[file:docs/images/ml_image_recognition.png]]
+*** docs/images/multi_tenant_ai_gateway_cost_tracking_architecture.png
+[[file:docs/images/multi_tenant_ai_gateway_cost_tracking_architecture.png]]
 *** docs/images/netflix_like.png
 [[file:docs/images/netflix_like.png]]
 *** docs/images/photo_sharing.png
 [[file:docs/images/photo_sharing.png]]
+*** docs/images/q-business-pdf-system-diagram.png
+[[file:docs/images/q-business-pdf-system-diagram.png]]
 *** docs/images/ride_sharing.png
 [[file:docs/images/ride_sharing.png]]
+*** docs/images/serverless_image_handler.png
+[[file:docs/images/serverless_image_handler.png]]
 *** docs/images/serverless_web.png
 [[file:docs/images/serverless_web.png]]
+*** docs/images/sra.png
+[[file:docs/images/sra.png]]
 *** docs/images/static_website.png
 [[file:docs/images/static_website.png]]
 *** docs/images/twitter_like.png
 [[file:docs/images/twitter_like.png]]
+*** docs/images/unified_profiles_for_travelers_and_guests.png
+[[file:docs/images/unified_profiles_for_travelers_and_guests.png]]
 *** docs/images/url_shortener.png
 [[file:docs/images/url_shortener.png]]
 
