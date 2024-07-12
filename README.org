@@ -25,46 +25,66 @@ This repository focuses on decomposing system designs for Amazon Web Services (A
 ** Diagrams
 
 #+DIAGRAMS_START
-
-*** docs/images/contact_center_rag.png
+*** Available Diagrams
+The following diagrams are available in this project:
+**** contact center rag
 [[file:docs/images/contact_center_rag.png]]
-*** docs/images/enhanced_document_understanding.png
+
+**** enhanced document understanding
 [[file:docs/images/enhanced_document_understanding.png]]
-*** docs/images/etsy_ads.png
+
+**** etsy ads
 [[file:docs/images/etsy_ads.png]]
-*** docs/images/game_analytics_pipeline.png
+
+**** game analytics pipeline
 [[file:docs/images/game_analytics_pipeline.png]]
-*** docs/images/generative_ai_application_builder.png
+
+**** generative ai application uuilder
 [[file:docs/images/generative_ai_application_builder.png]]
-*** docs/images/iot_airport_hotel_architecture.png
+
+**** iot airport hotel architecture
 [[file:docs/images/iot_airport_hotel_architecture.png]]
-*** docs/images/media_services_application_mapper.png
+
+**** media services application mapper
 [[file:docs/images/media_services_application_mapper.png]]
-*** docs/images/ml_image_recognition.png
+
+**** ml image recognition
 [[file:docs/images/ml_image_recognition.png]]
-*** docs/images/multi_tenant_ai_gateway_cost_tracking_architecture.png
+
+**** multi tenant ai gateway cost tracking architecture
 [[file:docs/images/multi_tenant_ai_gateway_cost_tracking_architecture.png]]
-*** docs/images/netflix_like.png
+
+**** netflix like
 [[file:docs/images/netflix_like.png]]
-*** docs/images/photo_sharing.png
+
+**** photo sharing
 [[file:docs/images/photo_sharing.png]]
-*** docs/images/q-business-pdf-system-diagram.png
+
+**** q-uusiness-pdf-system-diagram
 [[file:docs/images/q-business-pdf-system-diagram.png]]
-*** docs/images/ride_sharing.png
+
+**** ride sharing
 [[file:docs/images/ride_sharing.png]]
-*** docs/images/serverless_image_handler.png
+
+**** serverless image handler
 [[file:docs/images/serverless_image_handler.png]]
-*** docs/images/serverless_web.png
+
+**** serverless web
 [[file:docs/images/serverless_web.png]]
-*** docs/images/sra.png
+
+**** sra
 [[file:docs/images/sra.png]]
-*** docs/images/static_website.png
+
+**** static weusite
 [[file:docs/images/static_website.png]]
-*** docs/images/twitter_like.png
+
+**** twitter like
 [[file:docs/images/twitter_like.png]]
-*** docs/images/unified_profiles_for_travelers_and_guests.png
+
+**** unified profiles for travelers and guests
 [[file:docs/images/unified_profiles_for_travelers_and_guests.png]]
-*** docs/images/url_shortener.png
+
+**** url shortener
 [[file:docs/images/url_shortener.png]]
 
 #+DIAGRAMS_END
