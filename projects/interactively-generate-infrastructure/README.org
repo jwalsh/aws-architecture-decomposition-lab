@@ -1,0 +1,3 @@
+
+#+TITLE: interactively-generate-infrastructure
+#+DESCRIPTION: Project for Mermaid diagram diagrams/interactively_generate_infrastructure.mmd

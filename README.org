@@ -42,6 +42,9 @@ The following diagrams are available in this project:
 **** generative ai application uuilder
 [[file:docs/images/generative_ai_application_builder.png]]
 
+**** interactively generate infrastructure
+[[file:docs/images/interactively_generate_infrastructure.png]]
+
 **** iot airport hotel architecture
 [[file:docs/images/iot_airport_hotel_architecture.png]]
 
