@@ -27,6 +27,9 @@ This repository focuses on decomposing system designs for Amazon Web Services (A
 #+DIAGRAMS_START
 *** Available Diagrams
 The following diagrams are available in this project:
+**** aws cloud ml training pipeline
+[[file:docs/images/aws_cloud_ml_training_pipeline.png]]
+
 **** contact center rag
 [[file:docs/images/contact_center_rag.png]]
 
