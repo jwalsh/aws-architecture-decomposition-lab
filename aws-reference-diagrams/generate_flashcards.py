@@ -88,7 +88,7 @@ def process_tags(tags):
 def convert_pdf_to_image(pdf_path, output_path):
     """Convert PDF to image using pdf2image."""
     try:
-        images = convert_from_path(pdf_path, dpi=150, first_page=1, last_page=1)
+        images = convert_from_path(pdf_path, dpi=100, first_page=1, last_page=1)
         if images:
             images[0].save(output_path, 'PNG')
             print(f"Converted {pdf_path} to {output_path}")
@@ -169,6 +169,7 @@ def generate_flashcards(refresh_data, refresh_diagrams, local_pdf, ai_generate, 
                             'docTitle': clean_text(additional_fields.get('docTitle', '')),
                             'tags': tags,
                             'id': item_data.get('id', ''),
+                            'name': name,
                             'dateCreated': item_data.get('dateCreated', ''),
                             'primaryURL': url,
                             'description': clean_description
