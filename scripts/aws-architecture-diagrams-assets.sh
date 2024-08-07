@@ -1,4 +1,21 @@
 #!/bin/bash
+#
+# Filename: aws-architecture-diagrams-assets.sh
+# URL: https://aws.amazon.com/architecture/icons/
+# Description:
+#   This script downloads the AWS Architecture Icons asset package, extracts it, and prepares the icons for use in Mermaid diagrams.
+#   It removes unnecessary directories and files, ensuring only the required icons are kept.
+
+# Check if required commands are installed
+if ! command -v wget &> /dev/null; then
+  echo "Error: wget is not installed. Please install it before running this script."
+  exit 1
+fi
+
+if ! command -v unzip &> /dev/null; then
+  echo "Error: unzip is not installed. Please install it before running this script."
+  exit 1
+fi
 
 # AWS Architecture Diagrams > Assets for Mermaid diagrams
 
@@ -37,15 +54,24 @@ for B in */; do
     fi
 
     # Audit the directories
+    echo "Directories to be pruned for $B with size $S:"
     find . -type d -name "$S"
     find . -type d -name "*_$S"
 
-    # Prune those directories
-    find . -type d -name "$S" -exec rm -rf {} \;
-    find . -type d -name "*_$S" -exec rm -rf {} \;
+    # Get user input to confirm prune
+    read -p "Prune these directories? (y/n) " -n 1 -r
+    echo ""
 
-    # Find any matching files that still look like unsafe dimensions
-    find . -type f -name "*_${S}x${S}.${SAFE_EXT}" -exec rm {} \;
+    if [[ $REPLY =~ ^[Yy]$ ]]; then
+      # Prune those directories
+      find . -type d -name "$S" -exec rm -rf {} \;
+      find . -type d -name "*_$S" -exec rm -rf {} \;
+
+      # Find any matching files that still look like unsafe dimensions
+      find . -type f -name "*_${S}x${S}.${SAFE_EXT}" -exec rm {} \;
+    else
+      echo "Skipping prune for $B with size $S"
+    fi
   done
 done
 
