@@ -1,0 +1,18 @@
+graph TD
+    A[Start] --> B{Refresh Data?}
+    B -->|Yes| C[Fetch new JSON data from AWS]
+    B -->|No| D{Refresh Diagrams?}
+    C --> D
+    D -->|Yes| E[Re-download all diagrams]
+    D -->|No| F{Generate Front/Back?}
+    E --> F
+    F -->|Yes| G[Use specified provider for front/back content]
+    F -->|No| H[Generate basic flashcards]
+    G --> I[Store versioned response in SQLite]
+    H --> J[Output flashcards to file]
+    I --> J
+    J --> K[End]
+
+    L[Monthly: Refresh Data] -.-> B
+    M[Every 6 months: Refresh Diagrams] -.-> D
+    N[Default: Basic Flashcards] -.-> H

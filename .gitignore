@@ -34,3 +34,10 @@ venv
 # Other ignored patterns (consider adding)
 *.log
 node_modules/
+
+# Diagrams
+aws-reference-diagrams/aws-reference-architectures-drill.org
+aws-reference-diagrams/aws_architecture_responses.db
+aws-reference-diagrams/diagrams/
+aws-reference-diagrams/reference-architecture-diagrams-*.json
+

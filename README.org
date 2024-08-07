@@ -171,3 +171,7 @@ To build the diagrams, run the above command in the diagrams folder.
 For help or questions, please open an issue or provide feedback.
 
 @jwalsh
+
+* Additional Resources
+
+- https://cloudacademy.com/learning-paths/aws-solutions-architect-associate-saa-c02-certification-preparation-954/?utm_source=google&utm_medium=paid-search&utm_campaign=&utm_content=163936506156&utm_term=certified%20solutions%20architect%20associate&utm_feeditemid=&utm_device=c&gad_source=1&gclid=Cj0KCQjw-uK0BhC0ARIsANQtgGM_XsyHTXUKy31qNN4MaFjx_8TBhm5PL8Ooa19c9bK_1ju2LQx8MIYaAud1EALw_wcB
