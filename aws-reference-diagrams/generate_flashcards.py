@@ -4,25 +4,29 @@ import requests
 from jinja2 import Template
 import re
 import click
+import subprocess
+from pdf2image import convert_from_path
 
 # Directory containing the JSON files
 directory = '.'
 
 # Template files for org-drill
-template_file = 'org-drill-reference-item-template.tmpl'
-front_back_template_file = 'org-drill-reference-item-front-back-template.tmpl'
+remote_template_file = 'org-drill-remote-template.tmpl'
+local_template_file = 'org-drill-local-template.tmpl'
+ai_enhanced_template_file = 'org-drill-ai-enhanced-template.tmpl'
 
 # Output file for org-drill flashcards
 output_file = 'aws-reference-architectures-drill.org'
 
 # Load the templates
-with open(template_file, 'r') as f:
-    template_content = f.read()
-    template = Template(template_content)
+# Load the templates
+with open(remote_template_file, 'r') as f:
+    remote_template_content = f.read()
+    remote_template = Template(remote_template_content)
 
-with open(front_back_template_file, 'r') as f:
-    front_back_template_content = f.read()
-    front_back_template = Template(front_back_template_content)
+with open(local_template_file, 'r') as f:
+    local_template_content = f.read()
+    local_template = Template(local_template_content)
 
 def clean_text(text):
     """
@@ -81,14 +85,47 @@ def process_tags(tags):
                 tech_tags.append(tag_name)
     return ':drill:' + ':'.join(tech_tags) + ':' if tech_tags else ':drill:'
 
+def convert_pdf_to_image(pdf_path, output_path):
+    """Convert PDF to image using pdf2image."""
+    try:
+        images = convert_from_path(pdf_path, dpi=150, first_page=1, last_page=1)
+        if images:
+            images[0].save(output_path, 'PNG')
+            print(f"Converted {pdf_path} to {output_path}")
+            return True
+    except Exception as e:
+        print(f"Error converting {pdf_path} to image: {e}")
+    return False
+
+def process_diagram(url, name, refresh=False):
+    """Process diagram: download if needed, convert to image if possible."""
+    pdf_filename = f"diagrams/{name}.pdf"
+    image_filename = f"diagrams/{name}.png"
+    
+    # Download PDF if it doesn't exist or refresh is True
+    if not os.path.exists(pdf_filename) or refresh:
+        download_diagram(url, name, refresh=refresh)
+    
+    # Convert PDF to image if PDF exists and image doesn't exist or refresh is True
+    if os.path.exists(pdf_filename) and (not os.path.exists(image_filename) or refresh):
+        convert_pdf_to_image(pdf_filename, image_filename)
+    
+    # Return the appropriate filename to use in the flashcard
+    if os.path.exists(image_filename):
+        return f"[[file:{image_filename}]]"
+    elif os.path.exists(pdf_filename):
+        return f"[[file:{pdf_filename}]]"
+    else:
+        return None
+
 @click.command()
 @click.option('--refresh-data', is_flag=True, help='Force re-fetching of JSON data from AWS')
 @click.option('--refresh-diagrams', is_flag=True, help='Force re-download of diagrams')
-@click.option('--generate-front-back', is_flag=True, help='Generate front and back sections for flashcards')
-@click.option('--provider', type=click.Choice(['pdf2text', 'ollama', 'claude', 'openai', 'gemini']), 
-              default='pdf2text', help='Provider for generating front/back content (if --generate-front-back is used)')
 @click.option('--local-pdf', is_flag=True, help='Use local PDF links instead of URLs')
-def generate_flashcards(refresh_data, refresh_diagrams, generate_front_back, provider, local_pdf):
+@click.option('--ai-generate', is_flag=True, help='Generate AI-enhanced content for flashcards')
+@click.option('--ai-provider', type=click.Choice(['ollama', 'claude', 'openai', 'gemini']), 
+              default='ollama', help='AI provider for generating enhanced content (if --ai-generate is used)')
+def generate_flashcards(refresh_data, refresh_diagrams, local_pdf, ai_generate, ai_provider):
     """Generates org-drill flashcards from AWS reference architecture JSON files."""
 
     # Fetch JSON data if --refresh-data is used or no JSON files exist
@@ -125,10 +162,6 @@ def generate_flashcards(refresh_data, refresh_diagrams, generate_front_back, pro
                         # Determine the URL or local file link
                         name = item_data.get('name', '')
                         url = additional_fields.get('primaryURL', '')
-                        if local_pdf:
-                            link = f"[[./diagrams/{name}.pdf]]"
-                        else:
-                            link = url
 
                         # Create a flattened dictionary for the template
                         flattened_data = {
@@ -136,15 +169,17 @@ def generate_flashcards(refresh_data, refresh_diagrams, generate_front_back, pro
                             'tags': tags,
                             'id': item_data.get('id', ''),
                             'dateCreated': item_data.get('dateCreated', ''),
-                            'primaryURL': link,
+                            'primaryURL': url,
                             'description': clean_description
                         }
 
-                        # Download the diagram
-                        download_diagram(url, name, refresh=refresh_diagrams)
-
-                        # Use the original template (without front/back processing)
-                        rendered_content = template.render(flattened_data)
+                        if local_pdf:
+                            download_diagram(url, name, refresh=refresh_diagrams)
+                            link = process_diagram(url, name, refresh=refresh_diagrams)
+                            flattened_data['link'] = link
+                        else:
+                            flattened_data['link'] = f"[[{url}]]"
+                            rendered_content = remote_template.render(flattened_data)
 
                         # Write the rendered content to the output file
                         outfile.write(rendered_content)

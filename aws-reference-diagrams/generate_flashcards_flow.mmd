@@ -4,15 +4,41 @@ graph TD
     B -->|No| D{Refresh Diagrams?}
     C --> D
     D -->|Yes| E[Re-download all diagrams]
-    D -->|No| F{Generate Front/Back?}
+    D -->|No| F{Use Local PDFs?}
     E --> F
-    F -->|Yes| G[Use specified provider for front/back content]
-    F -->|No| H[Generate basic flashcards]
-    G --> I[Store versioned response in SQLite]
-    H --> J[Output flashcards to file]
-    I --> J
-    J --> K[End]
+    F -->|Yes| G[Process local PDFs/images]
+    F -->|No| H[Use remote URLs]
+    G --> I{Generate AI Content?}
+    H --> I
+    I -->|Yes| J[Select AI Provider]
+    I -->|No| K[Use basic flashcard content]
+    J --> L{AI Provider}
+    L -->|Claude| M[Generate content with Claude]
+    L -->|OpenAI| N[Generate content with OpenAI]
+    M --> O[Create AI-enhanced flashcards]
+    M --> S[Store versioned response in SQLite]
+    N --> O
+    K --> P[Create basic flashcards]
+    O --> Q[Output flashcards to file]
+    P --> Q
+    Q --> R[End]
 
-    L[Monthly: Refresh Data] -.-> B
-    M[Every 6 months: Refresh Diagrams] -.-> D
-    N[Default: Basic Flashcards] -.-> H
+    subgraph AI Content Generation
+    J
+    L
+    M
+    N
+    O
+    end
+
+    subgraph Basic Content
+    K
+    P
+    end
+
+    S[Monthly: Refresh Data] -.-> B
+    T[Every 6 months: Refresh Diagrams] -.-> D
+    U[Default: Basic Flashcards] -.-> K
+
+    classDef decision fill:#f9f,stroke:#333,stroke-width:2px;
+    class B,D,F,I,L decision;
