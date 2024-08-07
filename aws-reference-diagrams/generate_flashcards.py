@@ -4,11 +4,17 @@ import requests
 from jinja2 import Template
 import re
 import click
-from langchain.llms import Ollama
-from langchain.embeddings import HuggingFaceEmbeddings
-from langchain.vectorstores import FAISS
-from langchain.chains.question_answering import load_qa_chain
-from langchain.document_loaders import PyPDFLoader
+
+# Optional imports for Ollama, only if needed
+try:
+    from langchain_community.llms import Ollama
+    from langchain_community.embeddings import HuggingFaceEmbeddings
+    from langchain_community.vectorstores import FAISS
+    from langchain.chains.question_answering import load_qa_chain
+    from langchain_community.document_loaders import PyPDFLoader
+except ImportError:
+    # Handle the case where langchain_community is not installed
+    pass
 
 # Directory containing the JSON files
 directory = '.'
@@ -19,11 +25,6 @@ front_back_template_file = 'org-drill-reference-item-front-back-template.tmpl'
 
 # Output file for org-drill flashcards
 output_file = 'aws_reference_architectures_flashcards.org'
-
-# Initialize Ollama model (only if needed)
-if generate_front_back: 
-    llm = Ollama(model="mistral")
-    embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
 
 # Load the templates
 with open(template_file, 'r') as f:
@@ -36,7 +37,7 @@ with open(front_back_template_file, 'r') as f:
 
 
 def download_diagram(url, name, filetype="pdf"):
-    """Downloads a diagram if it doesn't exist locally.
+    """Downloads a diagram if it doesn't exist locally or if --refresh-diagrams is used.
 
     Args:
         url: The URL of the diagram to download.
@@ -45,10 +46,10 @@ def download_diagram(url, name, filetype="pdf"):
     """
 
     filename = f"diagrams/{name}.{filetype}"
-    if not os.path.exists(filename):
+    if not os.path.exists(filename) or refresh_diagrams:
         try:
             response = requests.get(url)
-            response.raise_for_status()
+            response.raise_for_status()  # Raise an exception for bad responses
 
             with open(filename, 'wb') as f:
                 f.write(response.content)
@@ -114,17 +115,26 @@ def generate_services_list(text):
     query = "What AWS services and technologies are mentioned?"
     return chain.run(input_documents=[text], question=query, system_prompt=system_prompt)
 
-
 @click.command()
-@click.option('--force', is_flag=True, help='Force re-download of diagrams and re-generation of overviews/service lists')
-@click.option('--re-search', is_flag=True, help='Force re-fetching of JSON data from AWS')
-@click.option('--generate-front-back', is_flag=True, help='Generate front and back sections for flashcards using Ollama')
-def generate_flashcards(force, re_search, generate_front_back):
+@click.option('--refresh-data', is_flag=True, help='Force re-fetching of JSON data from AWS')
+@click.option('--refresh-diagrams', is_flag=True, help='Force re-download of diagrams')
+@click.option('--generate-front-back', is_flag=True, help='Generate front and back sections for flashcards using the specified provider')
+@click.option('--provider', type=click.Choice(['ollama', 'pdf2text']), default='ollama', help='Provider for generating front/back content (required if --generate-front-back is used)')
+def generate_flashcards(refresh_data, refresh_diagrams, generate_front_back, provider):
     """Generates org-drill flashcards from AWS reference architecture JSON files."""
 
+    # Check if --provider is specified when --generate-front-back is used
+    if generate_front_back and provider is None:
+        raise click.UsageError("--provider is required when using --generate-front-back")
+
+    # Initialize providers (only if needed)
+    if generate_front_back and provider == 'ollama':
+        llm = Ollama(model="mistral")
+        embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
+
     # Fetch JSON data if --re-search is used or no JSON files exist
-    if re_search or not any(f.endswith('.json') for f in os.listdir(directory)):
-        for page_num in range(1, 41):
+    if refresh_data or not any(f.endswith('.json') for f in os.listdir(directory)):
+        for page_num in range(1, 41): 
             filename = f"reference-architecture-diagrams-p{page_num}.json"
             print(f"Fetching Reference Architecture Diagrams page {page_num}")
             data = fetch_json_data(page_num)
@@ -160,13 +170,13 @@ def generate_flashcards(force, re_search, generate_front_back):
                         }
 
                         if generate_front_back:
-                            # Only generate overview and services if --force is used
-                            if force:
+                            # Only generate overview and services if --force is used or provider is 'ollama'
+                            if force or provider == 'ollama':
                                 # Generate overview from PDF or description
                                 if os.path.exists(f"diagrams/{item_data.get('name', '')}.pdf"):
                                     overview = generate_overview(f"diagrams/{item_data.get('name', '')}.pdf")
                                 else:
-                                    overview = clean_description
+                                    overview = clean_description 
 
                                 # Generate services list from description
                                 services = generate_services_list(clean_description)
