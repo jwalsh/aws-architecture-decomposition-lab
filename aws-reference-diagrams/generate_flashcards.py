@@ -76,7 +76,7 @@ def fetch_json_data(page_num):
 
 def process_tags(tags):
     """Process tags to extract tech categories and other relevant tags."""
-    tech_tags = []
+    tech_tags = ['aws','architecture']
     for tag in tags:
         tag_parts = tag['id'].split('#')
         if len(tag_parts) > 2:
@@ -117,6 +117,7 @@ def process_diagram(url, name, refresh=False):
         return f"[[file:{pdf_filename}]]"
     else:
         return None
+
 
 @click.command()
 @click.option('--refresh-data', is_flag=True, help='Force re-fetching of JSON data from AWS')
@@ -176,9 +177,10 @@ def generate_flashcards(refresh_data, refresh_diagrams, local_pdf, ai_generate, 
                         if local_pdf:
                             download_diagram(url, name, refresh=refresh_diagrams)
                             link = process_diagram(url, name, refresh=refresh_diagrams)
-                            flattened_data['link'] = link
+                            flattened_data['link'] = link or url  # Use URL as fallback if link is None
+                            rendered_content = local_template.render(flattened_data)
                         else:
-                            flattened_data['link'] = f"[[{url}]]"
+                            flattened_data['link'] = url
                             rendered_content = remote_template.render(flattened_data)
 
                         # Write the rendered content to the output file
