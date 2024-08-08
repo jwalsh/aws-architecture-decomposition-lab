@@ -1,25 +1,25 @@
 graph TD
-    Developers --> SageMaker[aws sagemaker create-model]
-    Customers --> Connect[aws connect start-contact-flow]
-    Connect --> Lex[aws lex-runtime post-text]
-    Lex --> Lambda[aws lambda invoke]
-    Lambda --> DynamoDB[aws dynamodb query]
-    Lambda --> OpenSearch[aws opensearch create-outbound-connection]
-    Lambda --> S3[aws s3 get-object]
-    Lambda --> Bedrock[aws bedrock-runtime invoke-model]
+    Developers --> sagemaker:create[create-model]
+    Customers --> connect:start[start-contact-flow]
+    connect:start --> lex:post[post-text]
+    lex:post --> lambda:invoke[invoke]
+    lambda:invoke --> dynamodb:query[query]
+    lambda:invoke --> opensearch:connect[create-outbound-connection]
+    lambda:invoke --> s3:get[get-object]
+    lambda:invoke --> bedrock:invoke[invoke-model]
     
-    OpenSearch --> KnowledgeBase[aws kendra query]
-    KnowledgeBase --> S3
+    opensearch:connect --> kendra:query[query]
+    kendra:query --> s3:get
     
-    ProductManagers --> QuickSight[aws quicksight create-dashboard]
+    ProductManagers --> quicksight:create[create-dashboard]
     
     subgraph DataPipeline[Data Pipeline]
-        Kinesis[aws kinesis put-record] --> Athena[aws athena start-query-execution]
-        Athena --> Redshift[aws redshift-data execute-statement]
-        Redshift --> Lambda2[aws lambda invoke]
+        kinesis:put[put-record] --> athena:start[start-query-execution]
+        athena:start --> redshift:execute[execute-statement]
+        redshift:execute --> lambda:invoke2[invoke]
     end
     
-    Lambda2 --> CloudWatch[aws cloudwatch put-metric-data]
-    CloudWatch --> SNS[aws sns publish]
+    lambda:invoke2 --> cloudwatch:put[put-metric-data]
+    cloudwatch:put --> sns:publish[publish]
     
-    Connect --> DataPipeline
+    connect:start --> DataPipeline

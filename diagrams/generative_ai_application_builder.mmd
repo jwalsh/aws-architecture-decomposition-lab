@@ -1,42 +1,42 @@
 graph TD
     Users[Admin users] -->|1| Client
-    Client -->|2| CF[Amazon CloudFront]
-    Client -->|3| WAF[AWS WAF V2 WebACL]
-    WAF -->|4| APIG[Amazon API Gateway]
-    CF --> APIG
-    CF --> S3UI[Amazon S3\nWeb App UI]
-    APIG -->|5| Cognito[Amazon Cognito]
-    APIG -->|6| Lambda[AWS Lambda\nBacking Functions]
-    Lambda -->|7| DDB[(Amazon DynamoDB\nConfiguration Store)]
-    Lambda -->|8| CFN[AWS CloudFormation]
-    CFN -->|Use Case & Nested Templates| S3A[Amazon S3\nAWS Solutions Artifact Bucket]
-    CFN --> Stacks[Stacks\nDeployed Use Cases]
-    CFN -->|9| SM[AWS Secrets Manager]
-    SM -->|10| PS1[Parameter Store]
-    PS1 -->|Delete key| LambdaF[Lambda function]
-    DDB -->|Filtered event for\nRemove on TTL expiry| LambdaF
-    CFN -->|11| CW[Amazon CloudWatch\nCustom Dashboard]
+    Client -->|2| cloudfront:cdn[CloudFront]
+    Client -->|3| waf:acl[WAF V2 WebACL]
+    waf:acl -->|4| apigateway:api[API Gateway]
+    cloudfront:cdn --> apigateway:api
+    cloudfront:cdn --> s3:ui[S3 Web App UI]
+    apigateway:api -->|5| cognito:auth[Cognito]
+    apigateway:api -->|6| lambda:functions[Lambda Backing Functions]
+    lambda:functions -->|7| dynamodb:config[(DynamoDB Configuration Store)]
+    lambda:functions -->|8| cloudformation:service[CloudFormation]
+    cloudformation:service -->|Use Case & Nested Templates| s3:artifacts[S3 AWS Solutions Artifact Bucket]
+    cloudformation:service --> Stacks[Stacks Deployed Use Cases]
+    cloudformation:service -->|9| secretsmanager:secrets[Secrets Manager]
+    secretsmanager:secrets -->|10| ssm:paramstore[Parameter Store]
+    ssm:paramstore -->|Delete key| lambda:cleanup[Lambda cleanup function]
+    dynamodb:config -->|Filtered event for Remove on TTL expiry| lambda:cleanup
+    cloudformation:service -->|11| cloudwatch:dashboard[CloudWatch Custom Dashboard]
     
     subgraph AWS Cloud
-        CF
-        WAF
-        APIG
-        Cognito
-        Lambda
-        DDB
-        CFN
-        S3A
+        cloudfront:cdn
+        waf:acl
+        apigateway:api
+        cognito:auth
+        lambda:functions
+        dynamodb:config
+        cloudformation:service
+        s3:artifacts
         Stacks
-        SM
-        PS1
-        LambdaF
-        CW
-        S3UI
+        secretsmanager:secrets
+        ssm:paramstore
+        lambda:cleanup
+        cloudwatch:dashboard
+        s3:ui
     end
     
-    APIG -->|Store Stack ID as returned by AWS CloudFormation| DDB
+    apigateway:api -->|Store Stack ID as returned by AWS CloudFormation| dynamodb:config
     
     classDef awsService fill:#FF9900,stroke:#232F3E,stroke-width:2px,color:#232F3E;
-    class CF,WAF,APIG,Cognito,Lambda,DDB,CFN,S3A,SM,PS1,LambdaF,CW,S3UI awsService;
+    class cloudfront:cdn,waf:acl,apigateway:api,cognito:auth,lambda:functions,dynamodb:config,cloudformation:service,s3:artifacts,secretsmanager:secrets,ssm:paramstore,lambda:cleanup,cloudwatch:dashboard,s3:ui awsService;
     
     style AWS Cloud fill:#F7F7F7,stroke:#232F3E,stroke-width:2px;
