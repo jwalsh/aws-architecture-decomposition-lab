@@ -1,0 +1,35 @@
+graph TD
+    cloudwatch:main[Amazon CloudWatch] -->|1| alarm:central[Alarm]
+    alarm:central -->|2| sns:central[Amazon SNS Central Topic]
+    sns:central -->|3| sqs:buffer[Amazon SQS Buffer]
+    
+    ssm:store[Parameter Store] -->|4| lambda:processor[AWS Lambda Processor]
+    sqs:buffer -->|5| lambda:processor
+    
+    lambda:processor -->|6| sqs:dlq[Amazon SQS DLQ]
+    lambda:processor -->|7| sqs:workload1[Amazon SQS Workload 1]
+    lambda:processor -->|7| sqs:workload2[Amazon SQS Workload 2]
+    lambda:processor -->|7| sqs:workload3[Amazon SQS Workload 3]
+    
+    sqs:workload1 -->|8| lambda:action1[AWS Lambda Action 1]
+    sqs:workload2 -->|8| lambda:action2[AWS Lambda Action 2]
+    sqs:workload3 -->|8| lambda:action3[AWS Lambda Action 3]
+    
+    subgraph AWS Cloud
+        cloudwatch:main
+        alarm:central
+        sns:central
+        sqs:buffer
+        ssm:store
+        lambda:processor
+        sqs:dlq
+        sqs:workload1
+        sqs:workload2
+        sqs:workload3
+        lambda:action1
+        lambda:action2
+        lambda:action3
+    end
+    
+    classDef aws fill:#FF9900,stroke:#232F3E,stroke-width:2px,color:#232F3E;
+    class cloudwatch:main,alarm:central,sns:central,sqs:buffer,ssm:store,lambda:processor,sqs:dlq,sqs:workload1,sqs:workload2,sqs:workload3,lambda:action1,lambda:action2,lambda:action3 aws;
