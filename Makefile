@@ -46,6 +46,11 @@ clean:
 	rm -rf $(DIAGRAM_OUT_DIR)
 
 
+setup-architecture_simulator-db: aws_architecture_seed.sql
+	sqlite3 architecture_simulator.db < aws_architecture_seed.sql
+	echo "Database initialized!"
+	sqlite3 -header -column architecture_simulator.db < aws_architecture_arc_frequency.sql
+
 # Prettify JSON files
 prettify-json: $(JSON_FILES)
 	@echo "Prettifying JSON files..."

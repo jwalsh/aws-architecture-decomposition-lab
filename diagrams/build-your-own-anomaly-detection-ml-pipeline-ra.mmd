@@ -1,0 +1,78 @@
+graph TD
+    subgraph "Real-Time Device Telemetry Data Ingestion Pipeline"
+        Device[("Device #1, #2, #3")]
+        apigateway:ingest[Amazon API Gateway]
+        cognito:auth[Amazon Cognito]
+        kinesis:firehose[Amazon Kinesis Data Firehose]
+        lambda:transform[AWS Lambda]
+        s3:datalake[S3 Data Lake]
+        glue:catalog[AWS Glue Data Catalog]
+    end
+
+    subgraph "Data Engineering Pipeline"
+        glue:jobs[AWS Glue Jobs]
+        s3:training[Training Dataset]
+    end
+
+    subgraph "Machine Learning DevOps Pipeline"
+        codebuild:ml[AWS CodeBuild Create ML Container]
+        sagemaker:notebook[SageMaker Notebook]
+        codecommit:repo[AWS CodeCommit]
+        codebuild:qa[AWS CodeBuild Trigger QA Training]
+        codebuild:prod[AWS CodeBuild Deploy Model to Prod]
+        ecr:registry[Amazon Elastic Container Registry]
+    end
+
+    subgraph "Operationalize Inference Endpoint"
+        apigateway:inference[Amazon API Gateway]
+        lambda:inference[AWS Lambda]
+    end
+
+    subgraph "Inference Monitoring Pipeline"
+        sagemaker:monitor[Amazon SageMaker Model Monitor]
+        cloudwatch:events[Amazon CloudWatch]
+        sagemaker:a2i[Amazon SageMaker A2I Workflow]
+    end
+
+    subgraph "Deploy Pipeline"
+        stepfunctions:deploy[AWS Step Functions]
+        sagemaker:endpoint[Amazon SageMaker Inference Endpoint]
+    end
+
+    subgraph "(Re) Training Pipeline"
+        sagemaker:training[Amazon SageMaker Training jobs]
+        sagemaker:model[Trained new models]
+        s3:models[Trained ML models with version]
+    end
+
+    Device --> apigateway:ingest
+    apigateway:ingest --> cognito:auth
+    apigateway:ingest --> kinesis:firehose
+    kinesis:firehose --> lambda:transform
+    lambda:transform --> s3:datalake
+    s3:datalake --> glue:catalog
+    
+    glue:catalog --> glue:jobs
+    glue:jobs --> s3:training
+    
+    s3:training --> codebuild:ml
+    sagemaker:notebook --> codebuild:ml
+    codebuild:ml --> codecommit:repo
+    codecommit:repo --> codebuild:qa
+    codebuild:qa --> ecr:registry
+    ecr:registry --> codebuild:prod
+    
+    sagemaker:endpoint --> apigateway:inference
+    apigateway:inference --> lambda:inference
+    
+    lambda:inference --> sagemaker:monitor
+    sagemaker:monitor --> cloudwatch:events
+    cloudwatch:events --> sagemaker:a2i
+    
+    codebuild:prod --> stepfunctions:deploy
+    stepfunctions:deploy --> sagemaker:endpoint
+    
+    codebuild:qa --> sagemaker:training
+    sagemaker:training --> sagemaker:model
+    sagemaker:model --> s3:models
+    s3:models --> codebuild:prod
