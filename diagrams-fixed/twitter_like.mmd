@@ -1,0 +1,12 @@
+graph TD
+    User[User] -->|Post/Read Tweets| LB[Load Balancer]
+    LB --> WebApp[Web Application]
+    WebApp -->|Store/Retrieve Tweets| TweetService[Tweet Service]
+    TweetService -->|Write| TweetDB[(Tweet Database)]
+    TweetService -->|Read| TweetCache[Tweet Cache]
+    WebApp -->|Follow/Unfollow| UserService[User Service]
+    UserService -->|Store User Data| UserDB[(User Database)]
+    TimelineService[Timeline Service] -->|Generate Timeline| TweetCache
+    TimelineService -->|Retrieve Followings| UserDB
+    SearchService[Search Service] -->|Index Tweets| SearchIndex[(Search Index)]
+    NotificationService[Notification Service] -->|Send Notifications| MessageQueue[(Message Queue)]

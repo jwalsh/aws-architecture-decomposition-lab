@@ -1,0 +1,18 @@
+graph TD
+    User[User] -->|Upload Image| S3[Amazon S3]
+    S3 -->|Trigger| Lambda[AWS Lambda]
+    Lambda -->|Process Image| Rekognition[Amazon Rekognition]
+    
+    Rekognition -->|Return Results| Lambda
+    Lambda -->|Store Results| DynamoDB[Amazon DynamoDB]
+    
+    User -->|View Results| APIGateway[Amazon API Gateway]
+    APIGateway -->|Fetch Results| Lambda
+    
+    SageMaker[Amazon SageMaker] -->|Custom Model Training| Rekognition
+    
+    CloudWatch[Amazon CloudWatch] -->|Monitor| Lambda
+    CloudWatch -->|Monitor| Rekognition
+    
+    Developer[Developer] -->|Train Model| SageMaker
+    Developer -->|Deploy| Lambda

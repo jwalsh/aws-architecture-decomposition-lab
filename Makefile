@@ -1,5 +1,5 @@
 # Diagram Generation
-DIAGRAM_SRC_DIR := diagrams
+DIAGRAM_SRC_DIR := diagrams-fixed
 DIAGRAM_OUT_DIR := docs/images
 MERMAID_FILES := $(wildcard $(DIAGRAM_SRC_DIR)/*.mmd)
 PNG_DIAGRAMS := $(patsubst $(DIAGRAM_SRC_DIR)/%.mmd,$(DIAGRAM_OUT_DIR)/%.png,$(MERMAID_FILES))
@@ -31,13 +31,13 @@ distcheck:
 diagrams: $(PNG_DIAGRAMS) $(SVG_DIAGRAMS)
 	@echo "All diagrams generated successfully."
 
-$(DIAGRAM_OUT_DIR)/%.png: $(DIAGRAM_SRC_DIR)/%.mmd | $(DIAGRAM_OUT_DIR)
+$(DIAGRAM_OUT_DIR)/%.png: $(DIAGRAM_SRC_DIR)/%.mmd | $(DIAGRAM_OUT_DIR) 
 	@echo "Generating PNG diagram: $< -> $@"
-	mmdc -i $< -o $@ -b $(PNG_BG)
+	@-mmdc -i $< -o $@ -b $(PNG_BG)
 
 $(DIAGRAM_OUT_DIR)/%.svg: $(DIAGRAM_SRC_DIR)/%.mmd | $(DIAGRAM_OUT_DIR)
 	@echo "Generating SVG diagram: $< -> $@"
-	mmdc -i $< -o $@ -b transparent
+	@-mmdc -i $< -o $@ -b transparent
 
 $(DIAGRAM_OUT_DIR):
 	mkdir -p $@

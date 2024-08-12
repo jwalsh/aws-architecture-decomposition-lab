@@ -1,0 +1,42 @@
+graph TD
+    Users[Admin users] -->|1| Client
+    Client -->|2| cloudfront:cloudfront1[CloudFront]
+    Client -->|3| waf:waf1[WAF V2 WebACL]
+    waf:acl -->|4| apigateway:apigateway1[API Gateway]
+    cloudfront:cdn --> apigateway:api
+    cloudfront:cdn --> s3:s31[S3 Web App UI]
+    apigateway:api -->|5| cognito:cognito1[Cognito]
+    apigateway:api -->|6| lambda:lambda1[Lambda Backing Functions]
+    lambda:functions -->|7| dynamodb:dynamodb1[(DynamoDB Configuration Store)]
+    lambda:functions -->|8| cloudformation:cloudformation1[CloudFormation]
+    cloudformation:service -->|Use Case & Nested Templates| s3:s32[S3 AWS Solutions Artifact Bucket]
+    cloudformation:service --> Stacks[Stacks Deployed Use Cases]
+    cloudformation:service -->|9| secretsmanager:secretsmanager1[Secrets Manager]
+    secretsmanager:secrets -->|10| 
+    ssm:paramstore -->|Delete key| lambda:lambda2[Lambda cleanup function]
+    dynamodb:config -->|Filtered event for Remove on TTL expiry| lambda:cleanup
+    cloudformation:service -->|11| cloudwatch:cloudwatch1[CloudWatch Custom Dashboard]
+    
+    subgraph AWS Cloud
+        cloudfront:cdn
+        waf:acl
+        apigateway:api
+        cognito:auth
+        lambda:functions
+        dynamodb:config
+        cloudformation:service
+        s3:artifacts
+        Stacks
+        secretsmanager:secrets
+        ssm:paramstore
+        lambda:cleanup
+        cloudwatch:dashboard
+        s3:ui
+    end
+    
+    apigateway:api -->|Store Stack ID as returned by AWS CloudFormation| dynamodb:config
+    
+    classDef awsService fill:#FF9900,stroke:#232F3E,stroke-width:2px,color:#232F3E;
+    class cloudfront:cdn,waf:acl,apigateway:api,cognito:auth,lambda:functions,dynamodb:config,cloudformation:service,s3:artifacts,secretsmanager:secrets,ssm:paramstore,lambda:cleanup,cloudwatch:dashboard,s3:ui awsService;
+    
+    style AWS Cloud fill:#F7F7F7,stroke:#232F3E,stroke-width:2px;
