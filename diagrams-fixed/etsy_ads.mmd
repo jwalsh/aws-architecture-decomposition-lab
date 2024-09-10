@@ -1,0 +1,51 @@
+graph TD
+    User[User] -->|Browse/Interact| WebApp[Etsy Web/Mobile App]
+    WebApp -->|Log Events| kinesis:kinesis1[Kinesis Data Streams]
+    
+    kinesis:streams -->|Process Events| kinesis:kinesis2[Kinesis Data Firehose]
+    kinesis:streams -->|Real-time Processing| kinesis:kinesis3[Kinesis Data Analytics]
+    
+    kinesis:firehose -->|Store Raw Data| s3:s31[S3 Data Lake]
+    kinesis:analytics -->|Update User Profiles| dynamodb:dynamodb1[DynamoDB]
+    
+    s3:datalake -->|Batch Processing| emr:emr1[EMR]
+    emr:cluster -->|Train Models| sagemaker:sagemaker1[SageMaker]
+    
+    WebApp -->|Ad Request| elb:elb1[Application Load Balancer]
+    elb:adserver -->|Route Request| AdServer[Ad Serving Engine]
+    
+    AdServer -->|Get User Profile| dynamodb:profiles
+    AdServer -->|Get Ad Candidates| elasticache:elasticache1[ElastiCache]
+    AdServer -->|Rank Ads| sagemaker:sagemaker2[SageMaker]
+    
+    sagemaker:training -->|Deploy Models| AdServer
+    
+    AdServer -->|Serve Ad| WebApp
+    AdServer -->|Log Impression/Click| kinesis:streams
+    
+    cloudwatch:cloudwatch1[CloudWatch] -->|Monitor| AdServer
+    cloudwatch:monitoring -->|Monitor| kinesis:streams
+    cloudwatch:monitoring -->|Monitor| sagemaker:training
+    
+    quicksight:quicksight1[QuickSight] -->|Visualize| s3:datalake
+    quicksight:analytics -->|Visualize| dynamodb:profiles
+    
+    subgraph "Real-time Processing"
+        kinesis:streams
+        kinesis:firehose
+        kinesis:analytics
+    end
+    
+    subgraph "Machine Learning Pipeline"
+        emr:cluster
+        sagemaker:training
+    end
+    
+    subgraph "Ad Serving"
+        elb:adserver
+        AdServer
+        elasticache:ads
+    end
+
+    classDef aws fill:#FF9900,stroke:#232F3E,stroke-width:2px,color:#232F3E;
+    class kinesis:streams,kinesis:firehose,kinesis:analytics,s3:datalake,dynamodb:profiles,emr:cluster,sagemaker:training,sagemaker:inference,elb:adserver,elasticache:ads,cloudwatch:monitoring,quicksight:analytics aws;

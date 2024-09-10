@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 graph TD
     Users((Users))
     subgraph AWS Cloud
@@ -36,3 +37,42 @@ graph TD
     
     classDef aws fill:#FF9900,stroke:#232F3E,stroke-width:2px,color:#232F3E;
     class cognito:auth,appsync:api,dynamodb:projections,lambda:query,lambda:stream,dynamodb:stream aws;
+||||||| 409deea
+=======
+graph TD
+    Users((Users))
+    subgraph AWS Cloud
+        cognito:auth[Amazon Cognito authorization]
+        appsync:api[AWS AppSync BFF API]
+        dynamodb:projections[DynamoDB projection tables]
+        lambda:query[Lambda query handler on UI load]
+        lambda:stream[Lambda stream handler]
+        dynamodb:stream[DynamoDB Stream]
+        
+        subgraph Microservices
+            microservice:events[Microservice events]
+            bff:consumers[BFF event consumers]
+            app:sources[Application event sources]
+        end
+    end
+    
+    Users -->|2. initial query on UI load| cognito:auth
+    Users -->|3. subscribe to changes| appsync:api
+    Users -->|7. change notifications| Users
+    
+    cognito:auth --> appsync:api
+    appsync:api -->|2. alternative direct query| dynamodb:projections
+    
+    lambda:query -->|2| cognito:auth
+    lambda:query -->|1. projection updates pre UI load| dynamodb:projections
+    
+    microservice:events -->|1. microservice events pre UI load| bff:consumers
+    app:sources -->|4. microservice events| bff:consumers
+    
+    bff:consumers -->|4. projection updates| dynamodb:projections
+    
+    dynamodb:projections --> dynamodb:stream
+    dynamodb:stream -->|5. stream| lambda:stream
+    lambda:stream -->|6| appsync:api
+    
+>>>>>>> 942b3d3b5d385c201967c1d6955475a11b7e8962

@@ -1,0 +1,26 @@
+graph TD
+    subgraph AWS_Cloud["AWS Cloud"]
+        subgraph Data_Preprocessing["Data preprocessing"]
+            DC[Data Contributor] --> S3[Amazon S3 Raw Data]
+            S3 --> SQS[Amazon SQS]
+            SQS --> Lambda[AWS Lambda]
+            Lambda --> S3_TD[Amazon S3 Training Data]
+        end
+        
+        subgraph SageMaker_Training["Amazon SageMaker Training 128 GPUs cluster"]
+            S3_TD -->|Streaming using Fast File Mode| GPU0[GPU0]
+            S3_TD -->|Streaming using Fast File Mode| GPU1[GPU1]
+            S3_TD -->|Streaming using Fast File Mode| GPU2[GPU2]
+            S3_TD -->|Streaming using Fast File Mode| GPU125[GPU125]
+            S3_TD -->|Streaming using Fast File Mode| GPU126[GPU126]
+            S3_TD -->|Streaming using Fast File Mode| GPU127[GPU127]
+        end
+    end
+
+    %% Styling
+    classDef default fill:#f9f,stroke:#333,stroke-width:2px;
+    classDef awsService fill:#FF9900,stroke:#232F3E,stroke-width:2px;
+    classDef gpuNode fill:#1EC08E,stroke:#232F3E,stroke-width:2px;
+    
+    class S3,SQS,Lambda,S3_TD awsService;
+    class GPU0,GPU1,GPU2,GPU125,GPU126,GPU127 gpuNode;

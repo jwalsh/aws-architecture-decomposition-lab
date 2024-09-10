@@ -1,0 +1,73 @@
+graph TD
+    subgraph Data
+        TBO[Travel Business Objects]
+        THC[Travel and Hospitality connector catalog on AWS]
+        CIS[Customer Industry Systems]
+    end
+
+    subgraph Ingest
+        ACW[Amazon CloudWatch]
+        AWSLambda1[AWS Lambda scheduler]
+        AWSGlue[AWS Glue transformer]
+        AmazonS3[Amazon S3 flat records]
+        AmazonConnect[Amazon Connect Customer Profiles]
+        AmazonKinesis1[Amazon Kinesis]
+        AWSLambda2[AWS Lambda transformer]
+        AmazonKinesis2[Amazon Kinesis]
+        AmazonS3Backup[Amazon S3 Backup]
+    end
+
+    subgraph Processing
+        AmazonS3AI[Amazon S3 AI Matches]
+        AmazonEventBridge[Amazon EventBridge Match PutEvents]
+        AWSLambda3[AWS Lambda Match indexor]
+        AmazonDynamoDB1[Amazon DynamoDB Profile Matches]
+        AmazonKinesis3[Amazon Kinesis profile events]
+        AWSLambda4[AWS Lambda change Processor]
+        AmazonS3Export[Amazon S3 Profiles Export]
+    end
+
+    subgraph Frontend
+        SolutionFrontEnd[Solution Front End]
+        AmazonAPIGateway[Amazon API Gateway]
+        SyncBackend[Sync backend]
+        AsyncBackend[Async backend]
+    end
+
+    subgraph ErrorManagement
+        AmazonSQSAllErrors[Amazon SQS queues All error queues]
+        AWSLambdaError[AWS Lambda error processor]
+        AmazonDynamoDBErrors[Amazon DynamoDB Errors]
+    end
+
+    TBO --> ACW
+    THC --> AmazonEventBridge
+    CIS --> AmazonKinesis1
+
+    ACW --> AWSLambda1
+    AWSLambda1 --> AWSGlue
+    AWSGlue --> AmazonS3
+    AmazonS3 --> AmazonConnect
+    
+    AmazonEventBridge --> AWSLambda2
+    AWSLambda2 --> AmazonKinesis1
+    AmazonKinesis1 --> AWSLambda2
+    AWSLambda2 --> AmazonKinesis2
+    AmazonKinesis2 --> AmazonS3Backup
+
+    AmazonConnect --> AmazonKinesis3
+    AmazonKinesis3 --> AWSLambda4
+    AWSLambda4 --> AmazonS3Export
+
+    AmazonS3AI --> AmazonEventBridge
+    AmazonEventBridge --> AWSLambda3
+    AWSLambda3 --> AmazonDynamoDB1
+
+    SolutionFrontEnd --> AmazonAPIGateway
+    AmazonAPIGateway --> SyncBackend
+    AmazonAPIGateway --> AsyncBackend
+    SyncBackend --> AmazonDynamoDB1
+    AsyncBackend --> AmazonDynamoDBErrors
+
+    AmazonSQSAllErrors --> AWSLambdaError
+    AWSLambdaError --> AmazonDynamoDBErrors

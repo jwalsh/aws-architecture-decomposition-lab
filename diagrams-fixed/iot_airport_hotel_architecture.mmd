@@ -1,0 +1,46 @@
+graph TB
+    subgraph AirportsAndHotels ["airports and hotels"]
+        subgraph EdgeDevice ["edge device"]
+            IPCamera["IP camera"]
+        end
+        AWSIoTGreengrass["AWS IoT Greengrass"]
+        LambdaFunction["Lambda function"]
+        MLModel["machine learning model"]
+    end
+
+    subgraph AWSCloud ["AWS Cloud"]
+        subgraph CameraConfigDashboard ["camera config dashboard"]
+            S3Static["Amazon S3\nstatic website"]
+            CloudFront["Amazon CloudFront"]
+            S3Snapshot["Amazon S3\ncamera snapshot"]
+            Cognito["Amazon Cognito"]
+        end
+        AWSLambda["AWS Lambda\nfunction"]
+        DynamoDB["Amazon DynamoDB"]
+        AWSIoTCore["AWS IoT Core"]
+        IoTRule["IoT rule"]
+        CloudWatch["Amazon CloudWatch"]
+        IoTEvents["AWS IoT Events"]
+        Timestream["Amazon Timestream"]
+        SNS["Amazon SNS"]
+    end
+
+    Admin["admin"]
+    ServiceManager["service manager"]
+
+    IPCamera --> AWSIoTGreengrass
+    AWSIoTGreengrass --> AWSIoTCore
+    LambdaFunction --> AWSIoTGreengrass
+    MLModel --> AWSIoTGreengrass
+
+    AWSLambda <--> DynamoDB
+    DynamoDB --> CameraConfigDashboard
+    Admin --> CloudFront
+    CloudFront --> S3Static
+    AWSLambda --> AWSIoTCore
+    AWSIoTCore --> IoTRule
+    IoTRule --> CloudWatch
+    IoTRule --> IoTEvents
+    IoTRule --> Timestream
+    IoTEvents --> SNS
+    SNS --> ServiceManager

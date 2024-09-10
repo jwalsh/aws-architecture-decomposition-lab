@@ -1,0 +1,12 @@
+graph TD
+    User[User] -->|Browse/Watch| CDN[Content Delivery Network]
+    CDN --> WebApp[Web Application]
+    WebApp -->|Authenticate| AuthService[Auth Service]
+    AuthService -->|Verify| UserDB[(User Database)]
+    WebApp -->|Get Recommendations| RecService[Recommendation Service]
+    RecService -->|Fetch User History| UserDB
+    RecService -->|Get Content Info| ContentDB[(Content Database)]
+    WebApp -->|Stream Video| StreamingService[Streaming Service]
+    StreamingService -->|Fetch Video| VideoStorage[Video Storage]
+    EncodingService[Encoding Service] -->|Process Videos| VideoStorage
+    AnalyticsService[Analytics Service] -->|Log Viewing Data| DataWarehouse[(Data Warehouse)]

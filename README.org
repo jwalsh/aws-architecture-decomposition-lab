@@ -1,5 +1,7 @@
 * AWS Architecture Decomposition Lab
-#+CREATOR: Jason Walsh <j@wal.sh> 
+#+CREATOR: Jason Walsh <j@wal.sh>
+#+PROPERTY: header-args :eval never-export
+#+OPTIONS: toc:2
 
 This repository focuses on decomposing system designs for Amazon Web Services (AWS) hands-on projects, providing practical experience with AWS use cases.
 
@@ -12,6 +14,7 @@ This repository focuses on decomposing system designs for Amazon Web Services (A
 - Visualizing architectures using Mermaid diagrams
 - Explore scalability, performance, and security considerations
 - Gain hands-on experience with AWS
+- Implement literate programming practices using org-mode and babel
 
 
 ** References
@@ -19,144 +22,34 @@ This repository focuses on decomposing system designs for Amazon Web Services (A
 - https://aws.amazon.com/architecture/well-architected/
 - https://cloud.google.com/architecture/framework
 - https://learn.microsoft.com/en-us/azure/well-architected/
-- https://www.ibm.com/architectures/well-architected
+- https://www.ibm.com/architectures/well-architected/
 
+
+** Project Structure
+
+#+BEGIN_SRC shell :results output :exports results
+tree -L 2 -d
+#+END_SRC
 
 ** Diagrams
 
 #+DIAGRAMS_START
 *** Available Diagrams
 The following diagrams are available in this project:
-**** aws cloud ml training pipeline
-[[file:docs/images/aws_cloud_ml_training_pipeline.png]]
 
-**** contact center rag
-[[file:docs/images/contact_center_rag.png]]
-
-**** enhanced document understanding
-[[file:docs/images/enhanced_document_understanding.png]]
-
-**** etsy ads
-[[file:docs/images/etsy_ads.png]]
-
-**** game analytics pipeline
-[[file:docs/images/game_analytics_pipeline.png]]
-
-**** generative ai application uuilder
-[[file:docs/images/generative_ai_application_builder.png]]
-
-**** interactively generate infrastructure
-[[file:docs/images/interactively_generate_infrastructure.png]]
-
-**** iot airport hotel architecture
-[[file:docs/images/iot_airport_hotel_architecture.png]]
-
-**** media services application mapper
-[[file:docs/images/media_services_application_mapper.png]]
-
-**** ml image recognition
-[[file:docs/images/ml_image_recognition.png]]
-
-**** multi tenant ai gateway cost tracking architecture
-[[file:docs/images/multi_tenant_ai_gateway_cost_tracking_architecture.png]]
-
-**** netflix like
-[[file:docs/images/netflix_like.png]]
-
-**** photo sharing
-[[file:docs/images/photo_sharing.png]]
-
-**** q-uusiness-pdf-system-diagram
-[[file:docs/images/q-business-pdf-system-diagram.png]]
-
-**** ride sharing
-[[file:docs/images/ride_sharing.png]]
-
-**** serverless image handler
-[[file:docs/images/serverless_image_handler.png]]
-
-**** serverless web
-[[file:docs/images/serverless_web.png]]
-
-**** sra
-[[file:docs/images/sra.png]]
-
-**** static weusite
-[[file:docs/images/static_website.png]]
-
-**** twitter like
-[[file:docs/images/twitter_like.png]]
-
-**** unified profiles for travelers and guests
-[[file:docs/images/unified_profiles_for_travelers_and_guests.png]]
-
-**** url shortener
-[[file:docs/images/url_shortener.png]]
-
-#+DIAGRAMS_END
-
-** Features 
-
-| Category                   | Current Rating | Specific Features / Tasks                                     | Proposed Score | Implementation Sequence |
-|----------------------------+----------------+---------------------------------------------------------------+----------------+-------------------------|
-| Project Structure          |              8 | - Standardize project layouts across all examples             |              9 |                         |
-|                            |                | - Implement consistent naming conventions                     |                |                         |
-|----------------------------+----------------+---------------------------------------------------------------+----------------+-------------------------|
-| Makefile                   |              9 | - Add targets for running tests                               |              9 |                         |
-|                            |                | - Include deployment targets for different environments       |                |                         |
-|----------------------------+----------------+---------------------------------------------------------------+----------------+-------------------------|
-| Documentation              |              7 | - Expand README.org with more detailed usage instructions     |              8 |                         |
-|                            |                | - Create architecture decision records (ADRs)                 |                |                         |
-|----------------------------+----------------+---------------------------------------------------------------+----------------+-------------------------|
-| Diagrams                   |             10 | - Add sequence diagrams for complex interactions              |             10 |                         |
-|                            |                | - Include cost estimation diagrams                            |                |                         |
-|----------------------------+----------------+---------------------------------------------------------------+----------------+-------------------------|
-| Scripts                    |              9 | - Add script for automated environment setup                  |              9 |                         |
-|                            |                | - Create script for generating test data                      |                |                         |
-|----------------------------+----------------+---------------------------------------------------------------+----------------+-------------------------|
-| Project Variety            |              9 | - Add serverless data processing example                      |              9 |                         |
-|                            |                | - Include example of multi-region architecture                |                |                         |
-|----------------------------+----------------+---------------------------------------------------------------+----------------+-------------------------|
-| Dependency Management      |              8 | - Implement consistent use of Poetry across all projects      |              8 |                         |
-|                            |                | - Add version pinning for critical dependencies               |                |                         |
-|----------------------------+----------------+---------------------------------------------------------------+----------------+-------------------------|
-| Linting                    |              8 | - Add Python linting with flake8 or pylint                    |              8 |                         |
-|                            |                | - Implement pre-commit hooks for automatic linting            |                |                         |
-|----------------------------+----------------+---------------------------------------------------------------+----------------+-------------------------|
-| CI/CD Pipeline             |              2 | - Set up GitHub Actions for automated testing                 |              8 |                       2 |
-|                            |                | - Implement automatic diagram generation in CI                |                |                         |
-|                            |                | - Add linting checks to the CI pipeline                       |                |                         |
-|----------------------------+----------------+---------------------------------------------------------------+----------------+-------------------------|
-| Testing Framework          |              2 | - Add pytest for Python testing                               |              8 |                       1 |
-|                            |                | - Create basic unit tests for existing functions              |                |                         |
-|                            |                | - Implement integration tests for core components             |                |                         |
-|----------------------------+----------------+---------------------------------------------------------------+----------------+-------------------------|
-| Infrastructure as Code     |              3 | - Implement Terraform templates for each project              |              7 |                       4 |
-|                            |                | - Start with core services (S3, DynamoDB, Lambda)             |                |                         |
-|                            |                | - Gradually add more complex services                         |                |                         |
-|----------------------------+----------------+---------------------------------------------------------------+----------------+-------------------------|
-| Security Scanning          |              1 | - Integrate Bandit for Python security scanning               |              6 |                       6 |
-|                            |                | - Add security checks to the CI pipeline                      |                |                         |
-|                            |                | - Implement regular dependency vulnerability scans            |                |                         |
-|----------------------------+----------------+---------------------------------------------------------------+----------------+-------------------------|
-| API Documentation          |              1 | - Implement Swagger/OpenAPI for API projects                  |              7 |                       5 |
-|                            |                | - Begin with serverless-web and url-shortener projects        |                |                         |
-|----------------------------+----------------+---------------------------------------------------------------+----------------+-------------------------|
-| Containerization           |              1 | - Add Dockerfiles for applicable projects                     |              6 |                       8 |
-|                            |                | - Start with etsy-ads or netflix-like projects                |                |                         |
-|----------------------------+----------------+---------------------------------------------------------------+----------------+-------------------------|
-| Cost Management Tools      |              1 | - Implement AWS Cost Explorer integration                     |              5 |                       9 |
-|                            |                | - Create custom scripts for cost optimization recommendations |                |                         |
-|----------------------------+----------------+---------------------------------------------------------------+----------------+-------------------------|
-| Contribution Guidelines    |              2 | - Flesh out CONTRIBUTING.org with detailed guidelines         |              7 |                       7 |
-|                            |                | - Include information on coding standards, PR process         |                |                         |
-|----------------------------+----------------+---------------------------------------------------------------+----------------+-------------------------|
-| Licensing                  |              2 | - Choose and add appropriate open-source license              |              8 |                       3 |
-|                            |                | - Ensure all files include license headers                    |                |                         |
-|----------------------------+----------------+---------------------------------------------------------------+----------------+-------------------------|
-| Cross-project Integration  |              1 | - Create examples of inter-project integration                |              6 |                      10 |
-|                            |                | - Develop end-to-end scenarios using multiple architectures   |                |                         |
-|----------------------------+----------------+---------------------------------------------------------------+----------------+-------------------------|
+| Diagram Name                    | Description                                               | Complexity |
+|---------------------------------+-----------------------------------------------------------+------------|
+| URL Shortener                   | A serverless URL shortening service                       |          3 |
+| Photo Sharing App               | A scalable photo sharing application                      |          5 |
+| Ride Sharing Service            | A real-time ride-sharing platform                         |          7 |
+| Netflix-like Streaming          | A video streaming service similar to Netflix              |          8 |
+| Twitter-like Social Network     | A microblogging and social networking service             |          6 |
+| E-commerce Platform             | A comprehensive e-commerce solution                       |          7 |
+| IoT Data Processing Pipeline    | An IoT data ingestion and processing architecture         |          6 |
+| Machine Learning Training       | A distributed machine learning model training pipeline    |          5 |
+| Serverless Web Application      | A scalable web application using serverless components    |          4 |
+| Multi-Region Active-Active      | A globally distributed application with active-active setup |          9 |
+-------------------------------------------+----------------+-------------------------|
 | Overall Repository Quality |              7 |                                                               |              8 |                         |
 
 ** Note
@@ -166,12 +59,45 @@ These diagrams can be rendered using the mermaid command:
 
     mermaid view diagrams/url_shortener.mmd
 
-To build the diagrams, run the above command in the diagrams folder.
+To build the diagrams, use the =make diagrams= command.
 
-For help or questions, please open an issue or provide feedback.
+** Development Workflow
 
-@jwalsh
+1. Clone the repository
+2. Install dependencies: =make install-deps=
+3. Build diagrams: =make diagrams=
+4. Run tests: =make test=
+5. Lint code: =make lint=
 
-* Additional Resources
+** Testing
 
+To run tests, use the following command:
+
+#+BEGIN_SRC shell
+make test
+#+END_SRC
+
+** Contributing
+
+Please read the CONTRIBUTING.org file for details on our code of conduct and the process for submitting pull requests.
+
+** Literate Programming with Org-mode
+
+This project uses org-mode for literate programming. To tangle source files from org files, use the following command:
+
+#+BEGIN_SRC emacs-lisp
+(org-babel-tangle)
+#+END_SRC
+
+** License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+** Contact
+
+For help or questions, please open an issue or contact @jwalsh.
+
+** Additional Resources
+
+- AWS Documentation: https://docs.aws.amazon.com/
 - https://cloudacademy.com/learning-paths/aws-solutions-architect-associate-saa-c02-certification-preparation-954/?utm_source=google&utm_medium=paid-search&utm_campaign=&utm_content=163936506156&utm_term=certified%20solutions%20architect%20associate&utm_feeditemid=&utm_device=c&gad_source=1&gclid=Cj0KCQjw-uK0BhC0ARIsANQtgGM_XsyHTXUKy31qNN4MaFjx_8TBhm5PL8Ooa19c9bK_1ju2LQx8MIYaAud1EALw_wcB

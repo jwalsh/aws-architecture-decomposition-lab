@@ -1,0 +1,42 @@
+graph TD
+    User([User])
+    
+    subgraph AmazonBedrock ["Amazon Bedrock"]
+        BA[Bedrock Agent]
+        BLLM[Bedrock LLM Model]
+        
+        subgraph AG1 [Action Groups]
+            DAQ[Diagram Analysis & Query Generation]
+        end
+        
+        subgraph AG2 [Action Groups]
+            IGD[IaC Generation & Deployment]
+        end
+        
+        KB[(Knowledge Base)]
+    end
+    
+    subgraph WorkloadsAccount ["Workloads Account"]
+        GH[GitHub]
+        ACC[AWS CodeCommit/or third party repo]
+        ACB[AWS CodeBuild]
+        ACD[AWS CodeDeploy]
+    end
+    
+    User -->|1| BA
+    User -->|3| BA
+    DAQ -->|2| BA
+    DAQ -->|2| BLLM
+    BA -->|4| IGD
+    BLLM -->|4| IGD
+    IGD -->|4| KB
+    IGD -->|4| WorkloadsAccount
+    
+    GH --> ACC --> ACB --> ACD
+
+    classDef default fill:#f9f,stroke:#333,stroke-width:2px;
+    classDef amazonBedrock fill:#90EE90,stroke:#333,stroke-width:2px;
+    classDef workloadsAccount fill:#FFB6C1,stroke:#333,stroke-width:2px;
+    
+    class AmazonBedrock,BA,BLLM,AG1,AG2,KB amazonBedrock;
+    class WorkloadsAccount,GH,ACC,ACB,ACD workloadsAccount;

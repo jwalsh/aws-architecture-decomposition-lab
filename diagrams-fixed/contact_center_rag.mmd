@@ -1,0 +1,25 @@
+graph TD
+    Developers --> sagemaker:sagemaker1[create-model]
+    Customers --> connect:connect1[start-contact-flow]
+    connect:start --> lex:lex1[post-text]
+    lex:post --> lambda:lambda1[invoke]
+    lambda:invoke --> dynamodb:dynamodb1[query]
+    lambda:invoke --> opensearch:opensearch1[create-outbound-connection]
+    lambda:invoke --> s3:s31[get-object]
+    lambda:invoke --> 
+    
+    opensearch:connect --> 
+    kendra:query --> s3:get
+    
+    ProductManagers --> quicksight:quicksight1[create-dashboard]
+    
+    subgraph DataPipeline[Data Pipeline]
+        kinesis:kinesis1[put-record] --> athena:start[start-query-execution]
+        athena:start --> redshift:redshift1[execute-statement]
+        redshift:execute --> lambda:lambda2[invoke]
+    end
+    
+    lambda:invoke2 --> cloudwatch:cloudwatch1[put-metric-data]
+    cloudwatch:put --> sns:sns1[publish]
+    
+    connect:start --> DataPipeline

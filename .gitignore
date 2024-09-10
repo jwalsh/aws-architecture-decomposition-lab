@@ -1,3 +1,12 @@
+
+architecture_simulator.db
+aws-icons-workdir-*/
+i.mmd
+icons-diagrams/
+o.mmd
+pruned-assets/
+r.png
+
 # Build artifacts and temporary files
 # setup.shar
 # Makefile

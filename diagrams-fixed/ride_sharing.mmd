@@ -1,0 +1,13 @@
+graph TD
+    Passenger[Passenger] -->|Request Ride| PassengerApp[Passenger App]
+    Driver[Driver] -->|Accept Ride| DriverApp[Driver App]
+    PassengerApp --> API[API Gateway]
+    DriverApp --> API
+    API -->|Process Requests| MatchingService[Matching Service]
+    MatchingService -->|Find Nearby Drivers| GeoService[Geolocation Service]
+    GeoService -->|Store Locations| GeoDB[(Geospatial Database)]
+    MatchingService -->|Manage Rides| RideService[Ride Service]
+    RideService -->|Store Ride Data| RideDB[(Ride Database)]
+    PaymentService[Payment Service] -->|Process Payments| PaymentGateway[Payment Gateway]
+    NotificationService[Notification Service] -->|Send Updates| PushService[Push Notification Service]
+    RoutingService[Routing Service] -->|Calculate Routes| MapService[Map Service]
